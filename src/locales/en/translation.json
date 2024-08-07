@@ -1,0 +1,23 @@
+{
+  "header": {
+    "homepage":"Homepage",
+    "logIn": "Log In",
+    "logOut": "Log Out",
+    "myProfile": "My Profile",
+    "users": "Users"
+  },
+  "title": {
+    "default": "FC3 Blog",
+    "login": "Login | FC3 Blog",
+    "register": "Register | FC3 Blog",
+    "myProfile": "My Profile | FC3 Blog"
+  },
+  "error": {
+    "invalidEmail": "Invalid email format.",
+    "invalidUsername": "Invalid username (3-20 characters).",
+    "invalidUsernameOrEmail": "Invalid username/email",
+    "invalidPassword": "Password length must be higher than 8.",
+    "passwordMismatch": "Password mismatch.",
+    "verifyUserFailed": "Incorrect username/email/password."
+  }
+}
