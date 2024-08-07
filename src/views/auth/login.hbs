@@ -1,0 +1,16 @@
+<form action="/login" method="POST" autocomplete="on">
+  <h1>Login</h1>
+  <div>
+    <label for="Email">Your Email</label>
+    <input type="email" name="email" id="email" placeholder="example@domain" required>
+  </div>
+  <div>
+    <label for="Password">Password</label>
+    <input type="password" name="password" id="password" placeholder="********" required>
+  </div>
+  <section>
+    <button type="submit">Login</button>
+    <a href="/register"> Don't have an account? </a>
+  </section>
+  <button onclick="showDialog()"> Forgot Password? </button>
+</form>

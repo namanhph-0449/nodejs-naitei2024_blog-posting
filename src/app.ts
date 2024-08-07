@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
@@ -7,6 +8,7 @@ import logger from 'morgan';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import { config } from 'dotenv';
+import { AppDataSource } from './config/data-source';
 config();
 
 const app = express();
@@ -30,6 +32,7 @@ app.use((req, res, next) => {
 });
 
 // error handler
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
@@ -39,7 +42,14 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
     res.status(err.status || 500);
     res.render('error');
 });
-
+// Connect DB
+AppDataSource.initialize()
+    .then(() => {
+        console.log('Datasource has been initialized')  
+    })
+    .catch((err) => {
+        console.error('Error during Datasource initialization: ', err)
+    })
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
