@@ -5,6 +5,7 @@ import asyncHandler from 'express-async-handler';
 import i18next from 'i18next';
 
 const { t } = i18next;
+const postService = new PostService();
 
 export const createPost = asyncHandler(async (req: Request, res: Response) => {
     const currentUserId = req.session.user?.id;
@@ -15,7 +16,6 @@ export const createPost = asyncHandler(async (req: Request, res: Response) => {
     }
 
     const createPostDto: CreatePostDto = req.body;
-    const postService = new PostService();
     const post = await postService.create(createPostDto, currentUserId);
 
     res.status(201).json(post);
@@ -28,9 +28,33 @@ export const renderPostForm = asyncHandler(async (req: Request, res: Response) =
     });
 });
 
-export const getPosts = asyncHandler(async (req: Request, res: Response) => {
-    const postService = new PostService();
-    const posts = await postService.getPosts();
+export const getPostsForGuest = asyncHandler(async (req: Request, res: Response) => {
+    const page = parseInt(req.params.page as string, 10) || 1; 
+    const posts = await postService.getPostsForGuest(page);
 
-    res.status(200).json(posts);
+    // res.status(200).json(posts);
+    res.render('post/fyp', { posts, currentPage: page });
 });
+
+export const getFYPPosts = asyncHandler(async (req: Request, res: Response) => {
+    const currentUserId = req.session.user?.id;
+    const userRole = req.session.user ? req.session.user.role : null;
+
+    if (currentUserId === undefined) {
+        res.status(400).json({ message: t('error.userNotFound') });
+        return; 
+    }
+
+    const page = parseInt(req.params.page as string, 10) || 1; 
+    
+    try {
+        const posts = await postService.getFYPPosts(currentUserId, page);
+        res.render('post/fyp', { posts, currentPage: page, userRole });
+        // res.status(200).json(posts);
+    } 
+    catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
+

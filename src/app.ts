@@ -10,16 +10,20 @@ import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import { config } from 'dotenv';
 import { AppDataSource } from './config/data-source';
-
+import handlebarsHelpers from 'handlebars-helpers';
 config();
 
 const app = express();
 const hbs = require('hbs');
+const helpers = handlebarsHelpers();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerHelper(helpers);
+
 
 app.use(logger('dev'));
 app.use(express.json());

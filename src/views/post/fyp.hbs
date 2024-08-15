@@ -1,0 +1,64 @@
+<article class="content-page">
+  <main>
+    <!-- Intro Section -->
+    <section class="intro">
+      <div class="intro-inner">
+        <h2>Unleash Your Creativity</h2>
+        <h3>
+          Explore our top posts!
+          <br />
+          For the latest updates, check
+          {{#if userRole}}
+            <a href="/posts/fyp/1">here</a>.
+          {{/if}}
+          {{#unless userRole}}
+            <a href="/posts/1">here</a>.
+          {{/unless}}
+        </h3>
+      </div>
+    </section>
+
+    <!-- Dynamically Rendered Posts -->
+    {{#each posts}}
+    <section class="post-summary">
+      <div class="post-summary-inner">
+        <!-- Image Block (conditionally rendered) -->
+        {{#if image}}
+        <div class="post-image">
+          <img src="{{image}}" alt="Post Image" />
+        </div>
+        {{/if}}
+
+        <!-- Text Block -->
+        <div class="post-text">
+          <div class="post-meta">By {{user.username}}</div>
+          <div class="post-content">
+            <h3>{{title}}</h3>
+            <p>
+              {{content}}
+            </p>
+            <a href="/posts/{{id}}" class="btn btn-primary">
+                Read More
+              </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    {{/each}}
+
+    <!-- Pagination Controls -->
+    <nav class="pagination" aria-label="Page navigation">
+      <ul>
+        {{#if (gt currentPage 1)}}
+        <li><a href="/posts/fyp/{{subtract currentPage 1}}">Previous</a></li>
+        {{/if}}
+        <li><a href="/posts/fyp/{{add currentPage 1}}">Next</a></li>
+      </ul>
+    </nav>
+  </main>
+</article>
+
+
+<style>
+
+</style>

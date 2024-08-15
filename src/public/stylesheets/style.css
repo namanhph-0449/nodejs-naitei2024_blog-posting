@@ -1625,3 +1625,113 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+/* FYP */
+.content-page .intro {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .intro h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .intro h3 {
+    font-size: 1.2rem;
+  }
+  
+  /* Post Summary Section */
+  .content-page .post-summary {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin: 20px 0;
+  }
+  
+  .post-summary-inner {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .post-summary .post-image {
+    flex: 0 0 150px;
+    margin-right: 20px;
+  }
+  
+  .post-summary .post-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+  
+  .post-summary .post-text {
+    flex: 1;
+  }
+  
+  .post-summary .post-meta {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 10px;
+  }
+  
+  .post-summary .post-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .post-summary .post-content p {
+    margin-bottom: 10px;
+  }
+  
+  .post-summary .btn {
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+  }
+  
+  .post-summary .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Pagination */
+  .content-page .pagination {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .pagination ul {
+    list-style: none;
+    padding: 0;
+    display: inline-block;
+  }
+  
+  .pagination ul li {
+    display: inline;
+    margin: 0 5px;
+  }
+  
+  .pagination ul li a {
+    padding: 8px 12px;
+    color: #007BFF;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination ul li a:hover {
+    background-color: #f1f1f1;
+  }

@@ -81,7 +81,7 @@ export const postLogin = asyncHandler(async (req: Request, res: Response) => {
     }
     else { // Create session and redirect
       req.session.user = result;
-      res.redirect('/me');
+      res.redirect('/posts/fyp/1');
     }
   }
 });
