@@ -5,12 +5,9 @@ import { handleValidationErrors } from '../dtos/validate';
 import { RegisterDto } from '../dtos/register.dto';
 import { LoginDto } from '../dtos/login.dto';
 import { UserService } from '../services/user.service';
+import { validateSessionRole } from '../utils/index';
 
 const userService = new UserService();
-
-function validateSessionRole(req: Request) {
-  return req.session.user ? req.session.user.role : null;
-}
 
 export const getRegister = asyncHandler(async (req: Request, res: Response) => {
   if (!validateSessionRole(req)) {

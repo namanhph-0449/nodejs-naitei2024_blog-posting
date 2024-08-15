@@ -14,7 +14,16 @@ export class PostService {
     }
 
     async getPosts() {
-        return await this.postRepository.find();
+        return await this.postRepository.find({
+            order: { createdAt: 'DESC' }
+        });
+    }
+
+    async getPostsByUserId(userId: number) {
+        return await this.postRepository.find({
+            where: { user: { userId }},
+            order: { createdAt: 'DESC' }
+        });
     }
 
     async create(createPostDto: CreatePostDto, userId: number): Promise<Post> {
