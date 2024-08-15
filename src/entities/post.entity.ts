@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn,
-        UpdateDateColumn, OneToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
+        UpdateDateColumn, OneToOne, OneToMany, ManyToMany, JoinTable, 
+        JoinColumn} from 'typeorm';
 import { PostVisibility } from '../constants/post-visibility';
 import { User } from './user.entity';
 import { Action } from './action.entity';
@@ -20,6 +21,7 @@ export class Post {
   postId: number;
 
   @ManyToOne(() => User, (user) => user.posts)
+  @JoinColumn({ name: 'userId' })  // Custom name for the foreign key column
   user: User;
 
   @Column()

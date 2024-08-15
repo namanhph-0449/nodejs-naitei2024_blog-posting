@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler';
 // Import all route modules for the site here
 import registerRouter from './register.route';
 import loginRouter from './login.route';
+import postRouter from './post.route';
 
 const router: Router = Router();
 
@@ -37,5 +38,6 @@ router.get('/logout', logout);
 router.get('/me', myProfile);
 router.use('/login', loginRouter)
 router.use('/register', registerRouter);
+router.use('/posts', postRouter);
 
 export default router;

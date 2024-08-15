@@ -10,7 +10,11 @@
     "default": "FC3 Blog",
     "login": "Login | FC3 Blog",
     "register": "Register | FC3 Blog",
-    "myProfile": "My Profile | FC3 Blog"
+    "myProfile": "My Profile | FC3 Blog",
+    "createBlog": "Create Blog"
+  },
+  "content" : {
+    "createBlog": "Content"
   },
   "error": {
     "invalidEmail": "Invalid email format.",
@@ -18,6 +22,7 @@
     "invalidUsernameOrEmail": "Invalid username/email",
     "invalidPassword": "Password length must be higher than 8.",
     "passwordMismatch": "Password mismatch.",
-    "verifyUserFailed": "Incorrect username/email/password."
+    "verifyUserFailed": "Incorrect username/email/password.",
+    "userNotFound": "User not found."
   }
 }
