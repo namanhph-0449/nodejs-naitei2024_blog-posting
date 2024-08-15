@@ -12,8 +12,10 @@ import { validateSessionRole,
         validateAdminRole,
         validateActiveUser,
         shortenContent } from '../utils/';
+import { PostService } from '../services/post.service';
 
 const userService = new UserService();
+const postService = new PostService();
 
 async function validateUserById(req: Request, res: Response) {
   const id = parseInt(req.params.id);
@@ -32,11 +34,9 @@ async function validateUserById(req: Request, res: Response) {
 export const getUserById = asyncHandler(async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   const userDto = await validateUserById(req, res);
+  const currentUserId = req.session.user?.id;
   if (!userDto) return;
-  const userPosts = userDto.posts.map(post => ({
-    ...post,
-    content: shortenContent(post.content) // post preview
-  }));
+  const userPosts = await postService.getPostsByUserId(id, currentUserId);
   // Admin and page owner can Edit profile.
   res.render('users/show', {
     title: 'title.userProfile',
