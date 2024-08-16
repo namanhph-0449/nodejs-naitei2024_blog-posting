@@ -9,4 +9,6 @@ router.post('/create', postController.createPost);
 router.get('/:page', postController.getPostsForGuest);
 router.get('/fyp/:page', postController.getFYPPosts);
 
+router.get('/detail/:id', postController.getPostById);
+
 export default router;

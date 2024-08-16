@@ -58,3 +58,19 @@ export const getFYPPosts = asyncHandler(async (req: Request, res: Response) => {
     }
 });
 
+export const getPostById = asyncHandler(async (req: Request, res: Response) => {
+    const postId = parseInt(req.params.id, 10);
+    const currentUserId = req.session.user?.id;
+    const post = await postService.getPostById(currentUserId, postId);
+
+    if (!post) {
+        res.status(404).json({ message: t('error.postNotFound') });
+        return;
+    }
+
+    const isOwner = post.user.userId === currentUserId;
+
+    // res.status(200).json(post);
+    res.render('post/post-detail', { post, isOwner });
+});
+

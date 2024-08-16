@@ -9,10 +9,22 @@ const userService = new UserService();
 export class PostService {
     private postRepository = AppDataSource.getRepository(Post);
 
-    async getPostById(postId: number) {
-        return await this.postRepository.findOne({
-            where: { postId },
-        });
+    async getPostById(userId: number | undefined, postId: number) {
+      const post = await this.postRepository.findOne({
+        where: { postId },
+        relations: ['user'],
+      });
+
+      if (!post) {
+        throw new Error('Post not found');
+      }
+
+      if (post.visible !== PostVisibility.PUBLIC) {
+        if (!userId || post.user.userId !== userId) {
+          throw new Error('Post not found');
+        }
+      }
+      return post;
     }
 
     async getPostsByUserId(userId: number) {
