@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 import { UserRole } from '../constants/user-roles';
+import { UserStatus } from '../constants/user-status';
 import { Action } from './action.entity';
 import { Comment } from './comment.entity';
 import { Post } from './post.entity';
@@ -32,6 +33,12 @@ export class User {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @Column({ type: 'enum', enum: UserStatus, default: UserStatus.ACTIVE })
+  status: UserStatus;
+
+  @Column({ nullable: true })
+  deactiveReason: string;
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];

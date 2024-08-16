@@ -27,7 +27,7 @@ export class RegisterDto {
   confirm_password: string;
 }
 
-function IsMatch(property: string, validationOptions?: ValidationOptions) {
+export function IsMatch(property: string, validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
       name: 'isMatch',

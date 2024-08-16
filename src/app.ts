@@ -7,7 +7,6 @@ import session from 'express-session'
 import i18next from "./i18n";
 import i18nextMiddleware from "i18next-http-middleware";
 import indexRouter from './routes/index';
-import usersRouter from './routes/users';
 import { config } from 'dotenv';
 import { AppDataSource } from './config/data-source';
 
@@ -43,7 +42,6 @@ app.use(
 )
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

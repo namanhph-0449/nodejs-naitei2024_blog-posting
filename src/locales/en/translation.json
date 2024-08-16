@@ -11,18 +11,50 @@
     "login": "Login | FC3 Blog",
     "register": "Register | FC3 Blog",
     "myProfile": "My Profile | FC3 Blog",
+    "userProfile": "Profile | FC3 Blog",
     "createBlog": "Create Blog"
   },
+  "placeholder": {
+    "pwd": "Password",
+    "newPwd": "New Password",
+    "confirmNewPew": "Confirm Password",
+    "deactiveReason": "e.g. Violate rules?"
+  },
+  "menu": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "createBlog": "Create New Blog",
+    "follow": "Follow =3",
+    "subscribe": "Subscribe <3",
+    "assignAdmin": "Assign as Admin"
+  },
   "content" : {
-    "createBlog": "Content"
+    "username": "Username",
+    "role": "Role",
+    "joined": "Joined",
+    "createBlog": "Content",
+    "updateInfo": "Update Info",
+    "updatePassword": "Update Password",
+    "active": "Active",
+    "deactive": "Deactive",
+    "deactiveReason": "Why Deactivated"
   },
   "error": {
+    "default": "An error occured.",
     "invalidEmail": "Invalid email format.",
     "invalidUsername": "Invalid username (3-20 characters).",
     "invalidUsernameOrEmail": "Invalid username/email",
     "invalidPassword": "Password length must be higher than 8.",
+    "invalidRequest": "Invalid request.",
     "passwordMismatch": "Password mismatch.",
+    "usernameExist": "Username exists.",
+    "emailExist": "Email exists.",
+    "wrongPassword": "Wrong password.",
     "verifyUserFailed": "Incorrect username/email/password.",
-    "userNotFound": "User not found."
+    "validation": "Validation failed.",
+    "userNotFound": "User not found.",
+    "noBlogFound": "No Blog Found.",
+    "userDeactivated": "This user was deactivated by admin."
   }
 }
