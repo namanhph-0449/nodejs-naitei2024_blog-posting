@@ -1841,3 +1841,28 @@ color: #666;
     background-color: #0056b3;
     border-color: #004085;
 }
+
+/* Post Detail */
+.post-info {
+  display: flex;
+  justify-content: space-between;
+}
+.update-info {
+  text-align: right;
+}
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.like-button, .bookmark-button {
+  background-color: #f34334;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.like-button:hover, .bookmark-button:hover {
+  background-color: #f3694e;
+}
