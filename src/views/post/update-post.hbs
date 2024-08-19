@@ -1,0 +1,24 @@
+<form action="/posts/update/{{post.postId}}" method="POST">
+  <div class="form-group">
+    <label for="title">{{ title }}</label>
+    <input type="text" class="form-control" id="title" name="title" value="{{ post.title }}" required>
+  </div>
+  <div class="form-group">
+    <label for="content">{{ content }}</label>
+    <textarea class="form-control" id="content" name="content" rows="10" required>{{ post.content }}</textarea>
+  </div>
+  <div class="form-group">
+    <label for="visible">Visibility</label>
+    <select class="form-control" id="visible" name="visible" required>
+      <option value="private" {{#if (eq post.visible postVisibility.VISIBLE)}}selected{{/if}}>Private</option>
+      <option value="limited" {{#if (eq post.visible postVisibility.LIMITED)}}selected{{/if}}>Limited</option>
+      <option value="public" {{#if (eq post.visible postVisibility.PUBLIC)}}selected{{/if}}>Public</option>
+      <option value="pinned" {{#if (eq post.visible postVisibility.PINNED)}}selected{{/if}}>Pinned</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Update</button>
+</form>
+
+<script>
+  CKEDITOR.replace('content');
+</script>

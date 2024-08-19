@@ -84,11 +84,16 @@
             <div class="col-md-6">
               <div class="card mb-3">
                 <div class="card-body">
-                  <h3>{{{ this.title }}}</h3>
+                  <div class="post-header">
+                    <h3>{{{ this.title }}}</h3>
+                    <p class="post-visibility">{{ this.visible }}</p>
+                  </div>
                   <p class="card-text">{{{ this.content }}}</p>
-                  <a href="/posts/{{ this.postId }}" class="btn btn-success">{{ t 'menu.view' }}</a>
-                  <a href="/posts/update/{{ this.postId }}" class="btn btn-warning">{{ t 'menu.edit'}}</a>
-                  <a href="/posts/delete/{{ this.postId }}" class="btn btn-danger">{{ t 'menu.delete'}}</a>
+                  <a href="/posts/detail/{{ this.postId }}" class="btn btn-success">{{ t 'menu.view' }}</a>
+                  {{#if ../isOwner}} <!-- Check if the current user is the owner of the post -->
+                    <a href="/posts/update/{{ this.postId }}" class="btn btn-warning">{{ t 'menu.edit'}}</a>
+                    <a href="/posts/delete/{{ this.postId }}" class="btn btn-danger">{{ t 'menu.delete'}}</a>
+                  {{/if}}
                 </div>
               </div>
             </div>

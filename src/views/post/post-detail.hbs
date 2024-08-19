@@ -1,0 +1,32 @@
+<div class="container mt-4">
+    {{#if post}}
+        <div class="post-detail">
+            <h1>{{ post.title }}</h1>
+            <p class="text-muted">Posted by {{ post.user.username }} on {{ post.createdAt }}</p>
+
+            <div class="post-content">
+                {{{ post.content }}}
+            </div>
+            
+            {{#if post.tags.length}}
+            <div class="post-tags mt-3">
+                <strong>Tags:</strong>
+                <ul class="list-inline">
+                    {{#each post.tags}}
+                        <li class="list-inline-item">
+                            <a href="/posts/tag/{{ this.id }}" class="badge badge-primary">{{ this.name }}</a>
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
+            {{/if}}
+
+            {{#if isOwner}}
+                <a href="/posts/update/{{post.postId}}" class="btn btn-secondary">Edit</a>
+            {{/if}}
+        </div>
+
+    {{else}}
+        <p>{{ t 'error.postNotFound' }}</p>
+    {{/if}}
+</div>

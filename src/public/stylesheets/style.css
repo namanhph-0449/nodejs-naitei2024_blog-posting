@@ -1629,3 +1629,215 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+/* FYP */
+.content-page .intro {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .intro h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .intro h3 {
+    font-size: 1.2rem;
+  }
+  
+  /* Post Summary Section */
+  .content-page .post-summary {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin: 20px 0;
+  }
+  
+  .post-summary-inner {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .post-summary .post-image {
+    flex: 0 0 150px;
+    margin-right: 20px;
+  }
+  
+  .post-summary .post-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+  
+  .post-summary .post-text {
+    flex: 1;
+  }
+  
+  .post-summary .post-meta {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 10px;
+  }
+  
+  .post-summary .post-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .post-summary .post-content p {
+    margin-bottom: 10px;
+  }
+  
+  .post-summary .btn {
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+  }
+  
+  .post-summary .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Pagination */
+  .content-page .pagination {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .pagination ul {
+    list-style: none;
+    padding: 0;
+    display: inline-block;
+  }
+  
+  .pagination ul li {
+    display: inline;
+    margin: 0 5px;
+  }
+  
+  .pagination ul li a {
+    padding: 8px 12px;
+    color: #007BFF;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination ul li a:hover {
+    background-color: #f1f1f1;
+  }
+
+.post-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.post-visibility {
+font-size: 0.8rem;
+color: #666;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Post Title */
+.post-detail h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* Post Metadata */
+.post-detail .text-muted {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* Post Content */
+.post-detail .post-content {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 30px;
+}
+
+/* Tags */
+.post-tags {
+    margin-top: 20px;
+}
+
+.post-tags strong {
+    font-size: 1rem;
+    color: #555;
+}
+
+.post-tags .list-inline-item a {
+    font-size: 0.9rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.post-tags .list-inline-item a:hover {
+    text-decoration: underline;
+}
+
+/* Comments Section */
+.post-comments h2,
+.add-comment h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.post-comments .list-group-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+.post-comments .list-group-item strong {
+    color: #007bff;
+    font-size: 1rem;
+}
+
+.post-comments .list-group-item p {
+    font-size: 1rem;
+    color: #555;
+    margin: 10px 0 0;
+}
+
+/* Add Comment Section */
+.add-comment .form-group textarea {
+    font-size: 1rem;
+    padding: 10px;
+}
+
+.add-comment .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.add-comment .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}

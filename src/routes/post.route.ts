@@ -6,4 +6,14 @@ const router = express.Router();
 router.get('/create', postController.renderPostForm);
 router.post('/create', postController.createPost);
 
+router.get('/:page', postController.getPostsForGuest);
+router.get('/fyp/:page', postController.getFYPPosts);
+
+router.get('/detail/:id', postController.getPostById);
+
+router.get('/update/:id', postController.renderUpdateForm);
+router.post('/update/:id', postController.updatePost);
+
+router.get('/delete/:id', postController.deletePost);
+
 export default router;

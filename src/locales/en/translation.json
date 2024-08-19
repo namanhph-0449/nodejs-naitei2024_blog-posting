@@ -12,7 +12,9 @@
     "register": "Register | FC3 Blog",
     "myProfile": "My Profile | FC3 Blog",
     "userProfile": "Profile | FC3 Blog",
-    "createBlog": "Create Blog"
+    "createBlog": "Create Blog",
+    "editBlog": "Edit Blog",
+    "header": "Unleash your creativity"
   },
   "placeholder": {
     "pwd": "Password",
@@ -27,7 +29,10 @@
     "createBlog": "Create New Blog",
     "follow": "Follow =3",
     "subscribe": "Subscribe <3",
-    "assignAdmin": "Assign as Admin"
+    "assignAdmin": "Assign as Admin",
+    "readMore": "Read More",
+    "previous": "Previous",
+    "next": "Next"
   },
   "content" : {
     "username": "Username",
@@ -38,7 +43,8 @@
     "updatePassword": "Update Password",
     "active": "Active",
     "deactive": "Deactive",
-    "deactiveReason": "Why Deactivated"
+    "deactiveReason": "Why Deactivated",
+    "editBlog": "Edit Blog"
   },
   "error": {
     "default": "An error occured.",
