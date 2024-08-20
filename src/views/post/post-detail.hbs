@@ -1,32 +1,52 @@
 <div class="container mt-4">
-    {{#if post}}
-        <div class="post-detail">
-            <h1>{{ post.title }}</h1>
-            <p class="text-muted">Posted by {{ post.user.username }} on {{ post.createdAt }}</p>
+  {{#if post}}
+    <div class="post-detail bg">
+      <div class="post-info">
+        <p>{{ post.user.username }}</p>
+        <p>{{ t 'content.createdAt' }}: {{ post.createdAt }}</p>
+      </div>
+      <div class="post-info">
+      <div>
+        <p>
+          <i class="fa fa-eye fa-lg"></i> {{ post.stats.views }} {{ t 'content.view'}}
+          <i class="fa fa-heart fa-lg"></i> {{ post.stats.likes }} {{ t 'content.like'}}
+          <i class="fa fa-comment fa-lg"></i> {{ post.stats.comments }} {{ t 'content.comment'}}
+        </p>
+      </div>
+      <p>{{ t 'content.updatedAt' }}: {{ post.updatedAt }}</p>
+    </div>
+      <div class="post-content">
+        <center><h1>{{ post.title }}</h1></center>
+        {{{ post.content }}}
+      </div>
 
-            <div class="post-content">
-                {{{ post.content }}}
-            </div>
-            
-            {{#if post.tags.length}}
-            <div class="post-tags mt-3">
-                <strong>Tags:</strong>
-                <ul class="list-inline">
-                    {{#each post.tags}}
-                        <li class="list-inline-item">
-                            <a href="/posts/tag/{{ this.id }}" class="badge badge-primary">{{ this.name }}</a>
-                        </li>
-                    {{/each}}
-                </ul>
-            </div>
-            {{/if}}
+      {{#if post.tags.length}}
+      <div class="post-tags mt-3">
+        <strong>{{ t 'content.tags' }}</strong>
+        <ul class="list-inline">
+          {{#each post.tags}}
+            <li class="list-inline-item">
+              <a href="/posts/tag/{{ this.id }}" class="badge badge-primary">{{ this.name }}</a>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
 
-            {{#if isOwner}}
-                <a href="/posts/update/{{post.postId}}" class="btn btn-secondary">Edit</a>
-            {{/if}}
-        </div>
-
-    {{else}}
-        <p>{{ t 'error.postNotFound' }}</p>
-    {{/if}}
+      {{#if isOwner}}
+        <a href="/posts/update/{{post.postId}}" class="btn btn-secondary">{{ t 'menu.edit' }}</a>
+      {{/if}}
+    </div>
+    <div class="actions">
+      <button class="like-button">
+        <i class="fa fa-thumbs-up fa-lg"></i> {{ t 'menu.like' }}
+      </button>
+      <button class="bookmark-button">
+        <i class="fa fa-bookmark fa-lg"></i> {{ t 'menu.bookmark' }}
+      </button>
+    </div>
+  {{else}}
+    <p>{{ t 'error.postNotFound' }}</p>
+  {{/if}}
 </div>
+<script src="/js/script.js"></script>

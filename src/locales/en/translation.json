@@ -32,7 +32,10 @@
     "assignAdmin": "Assign as Admin",
     "readMore": "Read More",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "like": "Like <3",
+    "comment": "Comment :3",
+    "bookmark": "Bookmark"
   },
   "content" : {
     "username": "Username",
@@ -44,7 +47,18 @@
     "active": "Active",
     "deactive": "Deactive",
     "deactiveReason": "Why Deactivated",
-    "editBlog": "Edit Blog"
+    "editBlog": "Edit Blog",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at",
+    "tags": "Tags",
+    "view": "Views",
+    "like": "Likes",
+    "comment": "Comments"
+  },
+  "success": {
+    "default": "OK",
+    "like": "Like done!",
+    "bookmark": "Bookmark done!"
   },
   "error": {
     "default": "An error occured.",
@@ -53,6 +67,7 @@
     "invalidUsernameOrEmail": "Invalid username/email",
     "invalidPassword": "Password length must be higher than 8.",
     "invalidRequest": "Invalid request.",
+    "missingParams": "Missing parameter(s).",
     "passwordMismatch": "Password mismatch.",
     "usernameExist": "Username exists.",
     "emailExist": "Email exists.",

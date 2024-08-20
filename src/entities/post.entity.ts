@@ -39,13 +39,13 @@ export class Post {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Comment, (comment) => comment.post)
+  @OneToMany(() => Comment, (comment) => comment.post, { cascade: true })
   comments: Comment[];
 
-  @OneToMany(() => Action, (action) => action.post)
+  @OneToMany(() => Action, (action) => action.post, { cascade: true })
   actions: Action[];
 
-  @OneToOne(() => PostStats, (postStats) => postStats.post)
+  @OneToOne(() => PostStats, (postStats) => postStats.post, { cascade: true })
   stats: PostStats;
 
   @ManyToMany(() => Tag, tags => tags.posts)

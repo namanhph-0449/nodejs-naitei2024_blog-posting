@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
 import { Post } from './post.entity';
 import { DEFAULT_VALUE } from '../constants';
 
@@ -14,6 +14,7 @@ export class PostStats {
   id: number;
 
   @OneToOne(() => Post, (post) => post.stats, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'id' })
   post: Post;
 
   @Column({ default: DEFAULT_VALUE })
