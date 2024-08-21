@@ -39,13 +39,13 @@ export class Post {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Comment, (comment) => comment.post, { cascade: true })
+  @OneToMany(() => Comment, (comment) => comment.post, { onDelete: 'CASCADE' })
   comments: Comment[];
 
-  @OneToMany(() => Action, (action) => action.post, { cascade: true })
+  @OneToMany(() => Action, (action) => action.post, { onDelete: 'CASCADE' })
   actions: Action[];
 
-  @OneToOne(() => PostStats, (postStats) => postStats.post, { cascade: true })
+  @OneToOne(() => PostStats, (postStats) => postStats.post, { onDelete: 'CASCADE' })
   stats: PostStats;
 
   @ManyToMany(() => Tag, tags => tags.posts)

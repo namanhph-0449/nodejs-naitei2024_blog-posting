@@ -11,7 +11,7 @@ import { UserInfoDto,
 import { validateSessionRole,
         validateAdminRole,
         validateActiveUser,
-        shortenContent } from '../utils/';
+        sanitizeContent } from '../utils/';
 import { PostService } from '../services/post.service';
 
 const userService = new UserService();
@@ -36,7 +36,11 @@ export const getUserById = asyncHandler(async (req: Request, res: Response) => {
   const userDto = await validateUserById(req, res);
   const currentUserId = req.session.user?.id;
   if (!userDto) return;
-  const userPosts = await postService.getPostsByUserId(id, currentUserId);
+  const posts = await postService.getPostsByUserId(id, currentUserId);
+  const sanitizedPosts = posts.map(post => ({
+    ...post,
+    content: sanitizeContent(post.content)
+  }));;
   // Admin and page owner can Edit profile.
   res.render('users/show', {
     title: 'title.userProfile',
@@ -44,7 +48,7 @@ export const getUserById = asyncHandler(async (req: Request, res: Response) => {
     userActive: validateActiveUser(userDto.status),
     userAdmin: userDto?.role === UserRole.ADMIN,
     userRole: req.session.user?.role,
-    userPosts,
+    userPosts: sanitizedPosts,
     userStatus: UserStatus,
     isOwner: id == req.session.user?.id,
     isAdmin: validateAdminRole(req)

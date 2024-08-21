@@ -20,7 +20,7 @@ export class Action {
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @ManyToOne(() => Post, (post) => post.actions)
+  @ManyToOne(() => Post, (post) => post.actions, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'postId' })
   post: Post;
 

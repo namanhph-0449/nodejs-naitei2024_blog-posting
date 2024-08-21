@@ -1,61 +1,31 @@
-<article class="content-page">
+<article class="content-page page article i01">
   <main>
     <!-- Intro Section -->
-    <section class="intro">
-      <div class="intro-inner">
-        <h2> {{ title }}
-          <a href="/posts/create">{{ createPost }}</a>!
-        </h2>
+    <section class="lead">
+      <div class="lead--inner">
+        <h2>{{ title }}</h2>
         <h3>
-          Explore our top posts!
-          <br />
-          For the latest updates, check
-            <a href="/posts/fyp/1">here</a>.
+          <a href="/posts/create">{{ t 'menu.createBlog' }}</a>
         </h3>
       </div>
     </section>
-
-    <!-- Dynamically Rendered Posts -->
-    {{#each posts}}
-    <section class="post-summary">
-      <div class="post-summary-inner">
-        <!-- Image Block (conditionally rendered) -->
-        {{#if image}}
-        <div class="post-image">
-          <img src="{{image}}" alt="Post Image" />
-        </div>
-        {{/if}}
-
-        <!-- Text Block -->
-        <div class="post-text">
-          <div class="post-meta">By <a href="/users/{{user.userId}}"> {{user.username}} </a></div>
-          <div class="post-content">
-            <h3>{{{title}}}</h3>
-            <p>
-              {{{content}}}
-            </p>
-            <a href="/posts/detail/{{postId}}" class="btn btn-primary">
-              {{ t 'menu.readMore' }}
-              </a>
-          </div>
-        </div>
-      </div>
-    </section>
-    {{/each}}
-
+    {{> render_post }}
     <!-- Pagination Controls -->
     <nav class="pagination" aria-label="Page navigation">
       <ul>
         {{#if (gt currentPage 1)}}
-        <li><a href="/posts/fyp/{{subtract currentPage 1}}">{{ previous }}</a></li>
+        <li>
+          <a href="/posts/fyp/{{subtract currentPage 1}}" class="btn-lg">
+          {{ t 'menu.previous' }}
+          </a>
+        </li>
         {{/if}}
-        <li><a href="/posts/fyp/{{add currentPage 1}}">{{ next }}</a></li>
+        <li>
+          <a href="/posts/fyp/{{add currentPage 1}}" class="btn-lg">
+          {{ t 'menu.next' }}
+          </a>
+        </li>
       </ul>
     </nav>
   </main>
 </article>
-
-
-<style>
-
-</style>
