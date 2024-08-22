@@ -45,4 +45,35 @@ $(document).ready(function() {
       }
     });
   });
+
+  $('.reply-button').on('click', function() {
+    // Get the ID of the clicked reply button
+    var buttonId = $(this).attr('id');
+    var commentId = buttonId.split('-')[1]; // Extract commentId from button ID
+
+    $('.reply-form').hide();
+    var replyForm = $('#replyForm-' + commentId);
+    replyForm.toggle();
+    replyForm.find('input[name="parentCommentId"]').val(parseInt(commentId));
+
+    if (replyForm.is(':visible')) {
+      $('html, body').animate({
+        scrollTop: replyForm.offset().top - 100
+      }, 500);
+    }
+  });
+
+  // Toggle display of replies section
+  $('.reply-button').on('click', function() {
+    var commentId = $(this).data('comment-id');
+    var repliesSection = $('#replies-' + commentId);
+
+    // Toggle the replies section visibility
+    repliesSection.toggle();
+  });
+
+  $('#toggleCommentForm').click(function() {
+    $('#commentForm').toggle();
+  });
+
 });

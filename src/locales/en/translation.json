@@ -53,7 +53,9 @@
     "tags": "Tags",
     "view": "Views",
     "like": "Likes",
-    "comment": "Comments"
+    "comment": "Comments",
+    "noComment": "No Comment",
+    "addComment": "Add Comment"
   },
   "success": {
     "default": "OK",

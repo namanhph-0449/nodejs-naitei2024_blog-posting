@@ -1867,3 +1867,109 @@ color: #666;
 .like-button:hover, .bookmark-button:hover {
   background-color: #f3694e;
 }
+
+  /* Comment Section */
+.comments-section {
+  margin-top: 30px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.comments-section h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.comments-section ul {
+  padding-left: 0;
+}
+
+.comments-section .media {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.comments-section .media-body {
+  margin-left: 15px;
+}
+
+.comments-section .media-body h5 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.comments-section .media-body p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.comments-section .media-body small {
+  color: #888;
+}
+
+/* Add Comment Form */
+#commentForm {
+  margin-top: 20px;
+}
+
+#commentForm .form-group {
+  margin-bottom: 15px;
+}
+
+#commentForm label {
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: block;
+}
+
+#commentForm textarea {
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+}
+
+#commentForm .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+/* Actions (Like and Bookmark Buttons) */
+.actions {
+  margin-top: 30px;
+  display: flex;
+  gap: 10px;
+}
+
+.actions .like-button, .actions .bookmark-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.actions .like-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.actions .bookmark-button {
+  background-color: #ffc107;
+  color: white;
+}
+
+.actions .like-button:hover {
+  background-color: #218838;
+}
+
+.actions .bookmark-button:hover {
+  background-color: #e0a800;
+}
