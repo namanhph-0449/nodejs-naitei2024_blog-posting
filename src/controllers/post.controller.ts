@@ -48,8 +48,6 @@ export const getPostsForGuest = asyncHandler(async (req: Request, res: Response)
   res.render('post/guest-fyp', {
     posts,
     currentPage: page,
-    previous: t('menu.previous'),
-    next: t('menu.next'),
     title: t('title.header')
   });
 });
@@ -63,12 +61,10 @@ export const getFYPPosts = [
     try {
       const posts = await postService.getFYPPosts(currentUserId, page);
       res.render('post/fyp', {
-        posts, 
+        userRole: true,
+        posts,
         currentPage: page,
-        previous: t('menu.previous'),
-        next: t('menu.next'),
         title: t('title.header'),
-        createPost: t('menu.createBlog'),
       });
     }
     catch (err) {
@@ -86,7 +82,11 @@ export const getPostById = asyncHandler(async (req: Request, res: Response) => {
   const isOwner = post.user.userId === currentUserId;
   // increase post view
   await actionService.viewPost(postId, currentUserId);
-  res.render('post/post-detail', { post, isOwner });
+  res.render('post/post-detail', {
+    title: post.title,
+    post,
+    isOwner
+  });
 });
 
 export const renderUpdateForm = asyncHandler(async (req: Request, res: Response) => {

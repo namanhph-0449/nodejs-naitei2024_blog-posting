@@ -42,7 +42,7 @@ html{
     box-sizing:border-box;
     -webkit-box-sizing:border-box;
     -moz-box-sizing:border-box;
-    word-break:break-all
+    word-break:keep-all;
 }
 p{
     font-family:"Noto Sans Japanese";
@@ -50,6 +50,7 @@ p{
     line-break:strict;
 }
 a{
+    color:#f34334;
     -webkit-transition:opacity .3s ease-out;
     -moz-transition:opacity .3s ease-out;
     -ms-transition:opacity .3s ease-out;
@@ -934,7 +935,7 @@ main{
     letter-spacing:.12em;
     color:#f34334;
     width:40%;
-    white-space:nowrap
+    white-space:normal
 }
 .article main .iv--inner--text--block--contents p{
     margin-top:45px!important;

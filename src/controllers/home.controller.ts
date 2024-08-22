@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { validateSessionRole,
-        shortenContent,
+        sanitizeContent,
         validateActiveUser } from '../utils/';
 import { UserService } from '../services/user.service';
 import { UserWithBlogsDto } from '../dtos/user.info.dto';
@@ -26,7 +26,7 @@ export const getMyProfile = asyncHandler(async (req: Request, res: Response) => 
   const userDto = user ? new UserWithBlogsDto(user) : null;
   const userPosts = userDto?.posts.map(post => ({
     ...post,
-    content: shortenContent(post.content)
+    content: sanitizeContent(post.content)
   }));
   res.render('users/show', {
     title: 'title.myProfile',

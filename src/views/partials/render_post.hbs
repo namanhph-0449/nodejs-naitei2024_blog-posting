@@ -1,0 +1,26 @@
+    <!-- Dynamically Rendered Posts -->
+    {{#each posts}}
+    <section class="iv {{#ifEven @index}}iv01{{/ifEven}}{{#ifOdd @index}}iv02{{/ifOdd}}">
+      <div class="iv--inner clearfix">
+        <div class="iv--inner--image"><img src="/img/main.jpg" /></div>
+        <div class="iv--inner--text">
+          <div class="iv--inner--text--block">
+            <div class="num">By <a href="/users/{{user.userId}}"> {{user.username}} </a></div>
+            <div class="iv--inner--text--block--contents">
+              <h3>
+                {{{title}}}
+              </h3>
+              <p class="card-text">
+                <!-- Fix preview length -->
+                <!-- Passing constant from controller doesn't work. -->
+                {{#truncate content 500}}{{/truncate}}...
+              </p>
+              <p><a href="/posts/detail/{{postId}}" class="btn btn-secondary btn-lg">
+                {{ t 'menu.readMore' }}
+              </a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {{/each}}
