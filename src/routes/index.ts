@@ -5,6 +5,7 @@ import registerRouter from './register.route';
 import loginRouter from './login.route';
 import postRouter from './post.route';
 import userRouter from './user.route';
+import commentRouter from './comment.route';
 
 const router: Router = Router();
 
@@ -13,5 +14,6 @@ router.use('/login', loginRouter);
 router.use('/register', registerRouter);
 router.use('/posts', postRouter);
 router.use('/users', userRouter);
+router.use('/comments', commentRouter);
 
 export default router;

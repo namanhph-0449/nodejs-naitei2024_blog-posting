@@ -37,7 +37,43 @@
         <a href="/posts/update/{{post.postId}}" class="btn btn-secondary">{{ t 'menu.edit' }}</a>
       {{/if}}
     </div>
-    <div class="actions">
+
+    <!-- Comment Section -->
+    <div class="comments-section mt-4">
+      <h3>{{ t 'content.comment' }}</h3>
+      <!-- Toggle Comment Form Button -->
+      <button id="toggleCommentForm" class="btn btn-info mb-3">{{ t 'content.addComment' }}</button>
+
+      <!-- Add Comment Form -->
+      <form action="/comments/create" method="POST" id="commentForm" data-post-id="{{ post.postId }}" class="mt-3" style="display: none;">
+        <input type="hidden" name="userId" value="{{ session.user.id }}">
+        <input type="hidden" name="postId" value="{{ post.postId }}">
+        <input type="hidden" name="parentCommentId" value="">
+        <div class="form-group">
+          <label for="content">{{ t 'content.addComment' }}</label>
+          <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">{{ t 'menu.comment' }}</button>
+      </form>
+      <!-- Comments -->
+      {{#if comments.length}}
+        <ul class="list-unstyled">
+          {{#each comments}}
+            <li class="media mb-3">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">{{ this.user.username }}</h5>
+                <p>{{ this.content }}</p>
+                <small>{{ t 'content.createdAt' }}: {{ this.createdAt }}</small>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        <p>{{ t 'content.noComment' }}</p>
+      {{/if}}
+    </div>
+
+    <div class="actions mt-4">
       <button class="like-button">
         <i class="fa fa-thumbs-up fa-lg"></i> {{ t 'menu.like' }}
       </button>

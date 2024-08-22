@@ -7,10 +7,12 @@ import i18next from 'i18next';
 import { PostVisibility } from '../constants/post-visibility';
 import { Post } from '../entities/post.entity';
 import { isAuthenticated } from '../middlewares/auth.middleware';
+import { CommentService } from '../services/comment.service';
 
 const { t } = i18next;
 const actionService = new ActionService();
 const postService = new PostService();
+const commentService = new CommentService();
 
 const validatePost = (post: Post) => {
   if (!post) {
@@ -85,7 +87,8 @@ export const getPostById = asyncHandler(async (req: Request, res: Response) => {
   res.render('post/post-detail', {
     title: post.title,
     post,
-    isOwner
+    isOwner,
+    comments: post.comments,
   });
 });
 

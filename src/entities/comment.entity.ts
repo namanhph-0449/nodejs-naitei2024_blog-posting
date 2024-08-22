@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, CreateDateColumn, JoinColumn } from 'typeorm';
 import { User } from './user.entity';
 import { Post } from './post.entity';
 
@@ -13,16 +13,19 @@ export class Comment {
   @PrimaryGeneratedColumn()
   commentId: number;
 
-  @ManyToOne(() => User, (user) => user.comments)
+  @ManyToOne(() => User, (user) => user.comments, { eager: true, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'userId' })
   user: User;
 
-  @ManyToOne(() => Post, (post) => post.comments)
+  @ManyToOne(() => Post, (post) => post.comments, { eager: false, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'postId' })
   post: Post;
 
-  @ManyToOne(() => Comment, (comment) => comment.replies)
+  @ManyToOne(() => Comment, (comment) => comment.replies, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'parentCommentId' })
   parent: Comment;
 
-  @OneToMany(() => Comment, (comment) => comment.parent)
+  @OneToMany(() => Comment, (comment) => comment.parent, { cascade: true })
   replies: Comment[];
 
   @Column()
