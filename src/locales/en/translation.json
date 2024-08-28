@@ -19,26 +19,32 @@
   "placeholder": {
     "pwd": "Password",
     "newPwd": "New Password",
-    "confirmNewPew": "Confirm Password",
+    "confirmNewPwd": "Confirm Password",
     "deactiveReason": "e.g. Violate rules?"
   },
   "menu": {
+    "register": "Register",
+    "login": "Login",
     "view": "View",
     "edit": "Edit",
     "delete": "Delete",
     "createBlog": "Create New Blog",
-    "follow": "Follow =3",
-    "subscribe": "Subscribe <3",
+    "follow": "Follow",
+    "subscribe": "Subscribe",
     "assignAdmin": "Assign as Admin",
     "readMore": "Read More",
     "previous": "Previous",
     "next": "Next",
-    "like": "Like <3",
-    "comment": "Comment :3",
+    "like": "Like",
+    "comment": "Comment",
     "bookmark": "Bookmark"
   },
   "content" : {
     "username": "Username",
+    "usernameOrEmail": "Username or Email",
+    "email": "Email",
+    "pwd": "Password",
+    "confirmPwd": "Confirm Password",
     "role": "Role",
     "joined": "Joined",
     "createBlog": "Content",
@@ -59,6 +65,8 @@
   },
   "success": {
     "default": "OK",
+    "register": "Register successfully!",
+    "login": "You are now logged in!",
     "like": "Like done!",
     "bookmark": "Bookmark done!"
   },

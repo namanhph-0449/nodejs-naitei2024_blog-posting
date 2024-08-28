@@ -60,7 +60,10 @@ export class UserService {
   }
 
   async createUser(userDto: RegisterDto): Promise<{ success: boolean; errors?: string }> {
-    const { email, username, password } = userDto;
+    const { email, username, password, confirm_password } = userDto;
+    if (password !== confirm_password) {
+      return { success: false, errors: 'error.passwordMismatch' };
+    }
     const existUsernameUser = await this.getUserByUsername(username);
     if (existUsernameUser) {
       return { success: false, errors: 'error.usernameExist' }
@@ -118,6 +121,9 @@ export class UserService {
     if (!user) {
       return { success: false, errors: 'error.userNotFound' };
     }
+    if (newPwd !== confirmNewPwd) {
+      return { success: false, errors: 'error.passwordMismatch' };
+    }
     const passwordMatch = await bcrypt.compare(oldPwd, user.passwordHash);
     if (!passwordMatch) {
       return { success: false, errors: 'error.wrongPassword' };
@@ -144,8 +150,16 @@ export class UserService {
   async updateUserStatus(id: number, status: UserStatus, reason?: string) {
     const user = await this.getUserById(id);
     if(!user) return;
+    if (status === UserStatus.ACTIVE) {
+      user.deactiveReason = '';
+    }
+    else if (status === UserStatus.DEACTIVE) {
+      if (!reason) {
+        return;
+      }
+      user.deactiveReason = reason;
+    }
     user.status = status;
-    if (status===UserStatus.DEACTIVE && reason) user.deactiveReason = reason;
     return await this.userRepository.save(user);
   }
 }

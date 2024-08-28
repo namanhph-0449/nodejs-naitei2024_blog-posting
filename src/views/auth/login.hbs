@@ -1,26 +1,34 @@
+{{> flash_message }}
 <div class="auth-form">
   <form method="POST" action="login" autocomplete="on">
     <div class="form-group">
-      <input type="text" name="usernameOrEmail" id="usernameOrEmail" class="form-control item" placeholder="Your Username or Email" value="{{user.usernameOrEmail}}">
-    </div>
-    <div class="form-group">
-      <input type="password" name="password" id="password" class="form-control item" placeholder="Password" value="{{user.password}}">
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-block create-account">Login</button>
-    </div>
-    <p>Don't have an account? <a href="/register">Register</a> now.</p>
-    <ul>
-      {{#if input_errors}}
-        {{#each input_errors}}
+      <label for="usernameOrEmail">{{ t 'content.usernameOrEmail' }} <span class="text-danger">*</span></label>
+      <input type="text" name="usernameOrEmail" id="usernameOrEmail" class="form-control item" value="{{user.usernameOrEmail}}">
+      {{#each input_errors}}
+        {{#if (eq this.property 'usernameOrEmail')}}
           {{#each constraints}}
             <li class="li text-danger">{{t this}}</li>
           {{/each}}
-        {{/each}}
-      {{/if}}
-      {{#if verify_errors}}
-        <li class="li text-danger">{{t verify_errors}}</li>
-      {{/if}}
-    </ul>
+        {{/if}}
+      {{/each}}
+    </div>
+    <div class="form-group">
+      <label for="password">{{ t 'content.pwd' }} <span class="text-danger">*</span></label>
+      <input type="password" name="password" id="password" class="form-control item" value="{{user.password}}">
+      {{#each input_errors}}
+        {{#if (eq this.property 'password')}}
+          {{#each constraints}}
+            <li class="li text-danger">{{t this}}</li>
+          {{/each}}
+        {{/if}}
+      {{/each}}
+    </div>
+    {{#if verify_errors}}
+      <li class="li text-danger">{{t verify_errors}}</li>
+    {{/if}}
+    <div class="form-group">
+      <button type="submit" class="btn btn-block create-account">{{ t 'menu.login' }}</button>
+    </div>
+    <p>Don't have an account? <a href="/register">Register</a> now.</p>
   </form>
 </div>

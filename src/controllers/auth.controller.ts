@@ -7,6 +7,7 @@ import { LoginDto } from '../dtos/login.dto';
 import { UserService } from '../services/user.service';
 import { validateSessionRole } from '../utils/index';
 
+const { t } = i18next;
 const userService = new UserService();
 
 export const getRegister = asyncHandler(async (req: Request, res: Response) => {
@@ -42,13 +43,19 @@ export const postRegister = asyncHandler(async (req: Request, res: Response) => 
         user: req.body
       });
     }
-    else res.redirect('/login');
+    else {
+      req.flash('flashMessage', t('success.register'));
+      res.redirect('/login');
+    }
   }
 });
 
 export const getLogin = asyncHandler(async (req: Request, res: Response) => {
   if (!validateSessionRole(req)) {
-    res.render('auth/login', { title: 'title.login' });
+    res.render('auth/login', {
+      title: 'title.login',
+      flashMessage: req.flash('flashMessage'),
+    });
   }
   else res.redirect('/');
 });
@@ -60,7 +67,6 @@ export const postLogin = asyncHandler(async (req: Request, res: Response) => {
   loginDto.password = password;
   const input_errors = await handleValidationErrors(loginDto);
   if (input_errors) {
-    console.log(input_errors);
     return res.render('auth/login', {
       title: 'title.login',
       input_errors, // remind user of input validation
@@ -78,6 +84,7 @@ export const postLogin = asyncHandler(async (req: Request, res: Response) => {
     }
     else { // Create session and redirect
       req.session.user = result;
+      req.flash('flashMessage', t('success.login'));
       res.redirect('/posts/fyp/1');
     }
   }
