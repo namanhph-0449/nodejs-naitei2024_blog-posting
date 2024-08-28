@@ -3,7 +3,8 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import session from 'express-session'
+import session from 'express-session';
+import flash from 'connect-flash';
 import i18next from "./i18n";
 import i18nextMiddleware from "i18next-http-middleware";
 import indexRouter from './routes/index';
@@ -44,6 +45,8 @@ app.use(
     cookie: { maxAge: 8640000 } // session last for 1 day
   })
 )
+
+app.use(flash());
 
 app.use('/', indexRouter);
 

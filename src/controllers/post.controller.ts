@@ -66,6 +66,7 @@ export const getFYPPosts = [
         userRole: true,
         posts,
         currentPage: page,
+        flashMessage: req.flash('flashMessage'),
         title: t('title.header'),
       });
     }
