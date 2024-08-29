@@ -54,14 +54,16 @@
     "deactive": "Deactive",
     "deactiveReason": "Why Deactivated",
     "editBlog": "Edit Blog",
-    "createdAt": "Created at",
-    "updatedAt": "Updated at",
+    "createdAt": "Posted at",
+    "updatedAt": "Editted at",
     "tags": "Tags",
     "view": "Views",
     "like": "Likes",
     "comment": "Comments",
     "noComment": "No Comment",
-    "addComment": "Add Comment"
+    "addComment": "Add Comment",
+    "noImage": "No Image",
+    "postedBy": "Posted by"
   },
   "success": {
     "default": "OK",
