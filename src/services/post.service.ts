@@ -4,11 +4,14 @@ import { PostVisibility } from '../constants/post-visibility';
 import { CreatePostDto } from '../dtos/post/create-post.dto';
 import { Post } from '../entities/post.entity';
 import { PostStats } from '../entities/post-stats.entity';
+import { Tag } from '../entities/tag.entity';
 import { ActionService } from './action.service';
 import { UserService } from './user.service';
+import { TagService } from './tag.service';
 import { PAGE_SIZE } from '../constants/post-constant';
 
 const userService = new UserService();
+const tagService = new TagService();
 
 export class PostService {
   private postRepository = AppDataSource.getRepository(Post);
@@ -17,7 +20,7 @@ export class PostService {
   async getPostById(userId: number | undefined, postId: number) {
     const post = await this.postRepository.findOne({
       where: { postId },
-      relations: ['user', 'stats', 'actions', 'comments']
+      relations: ['user', 'stats', 'actions', 'comments', 'tags']
     });
 
     if (!post) {
@@ -95,15 +98,18 @@ export class PostService {
       take: pageSize, 
     });
     return posts;
-  }   
+  }
 
   async create(createPostDto: CreatePostDto, userId: number): Promise<Post> {
     const user = await userService.getUserById(userId);
     if (!user) {
       throw new Error('User not found');
     }
-        
-    const post = this.postRepository.create({
+    if (createPostDto.tags) {
+      const postTags = await tagService.associateTagsWithPost(createPostDto.tags);
+      createPostDto.tags = postTags;
+    }
+    const post = await this.postRepository.create({
       ...createPostDto,
       user,
     });
@@ -129,8 +135,10 @@ export class PostService {
     if (post.user.userId !== userId) {
       throw new Error('Unauthorized');
     }
-  
     this.postRepository.merge(post, updatePostDto);
+    if (updatePostDto.tags) {
+      post.tags = await tagService.associateTagsWithPost(updatePostDto.tags);
+    }
     return this.postRepository.save(post);
   }
 

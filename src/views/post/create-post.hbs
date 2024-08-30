@@ -1,25 +1,38 @@
 <form action="/posts/create" method="POST">
+  <!-- Fake button prevents implicit submission -->
+  <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+
   <div class="form-group">
     <label for="title"> {{ title }}</label>
     <input type="text" class="form-control" id="title" name="title" required>
   </div>
+
   <div class="form-group">
     <label for="content"> {{ content }}</label>
     <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
   </div>
+
   <div class="form-group">
     <label for="visible">Visibility</label>
     <select class="form-control" id="visible" name="visible" required>
       <option value="PRIVATE">Private</option>
       <option value="LIMITED">Limited</option>
       <option value="PUBLIC">Public</option>
-      <option value="PINNED">Pinned</option>
     </select>
+  </div>
+
+  <div class="form-group">
+    <label for="tags">Tags</label>
+    <input type="textarea" class="form-control" id="textBox"></input>
+    <br/>
+    <!-- Selected tags show here -->
+    <div class="target" contenteditable="false"></div>
+    <input type="hidden" id="hiddenTags" name="tags">
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+<script src="/js/tags.js"></script>
 <script>
   CKEDITOR.replace('content');
 </script>
-

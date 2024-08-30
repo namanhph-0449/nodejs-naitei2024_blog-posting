@@ -7,7 +7,7 @@
     "start": "node dist/bin/www",
     "dev": "nodemon src/app.ts",
     "lint": "npx eslint src/**/*.{js,ts}",
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --verbose --coverage",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "npm run typeorm migration:generate -- -d src/config/data-source.ts src/migrations/InitialMigration",
     "migration:run": "npm run typeorm migration:run -- -d src/config/data-source.ts"
