@@ -8,6 +8,7 @@ import { PostVisibility } from '../constants/post-visibility';
 import { Post } from '../entities/post.entity';
 import { isAuthenticated } from '../middlewares/auth.middleware';
 import { CommentService } from '../services/comment.service';
+import { reformatTimestamp } from '../utils';
 
 const { t } = i18next;
 const actionService = new ActionService();
@@ -28,7 +29,7 @@ export const createPost = [
     const createPostDto: CreatePostDto = req.body;
     await postService.create(createPostDto, currentUserId);
 
-    res.redirect(`/posts/fyp/1`);
+    res.redirect(`/posts/fyp`);
   })
 ];
 
@@ -42,9 +43,9 @@ export const renderPostForm = asyncHandler(async (req: Request, res: Response) =
 export const getPostsForGuest = asyncHandler(async (req: Request, res: Response) => {
   const currentUserId = req.session.user?.id;
   if (currentUserId) {
-    res.redirect(`/posts/fyp/1`);
+    res.redirect(`/posts/fyp`);
   }
-  const page = parseInt(req.params.page as string, 10) || 1;
+  const page = parseInt(req.query.page as string, 10) || 1;
   const posts = await postService.getPostsForGuest(page);
 
   res.render('post/guest-fyp', {
@@ -83,6 +84,8 @@ export const getPostById = asyncHandler(async (req: Request, res: Response) => {
   const post = await postService.getPostById(currentUserId, postId);
   validatePost(post);
   const isOwner = post.user.userId === currentUserId;
+  const postedTime = reformatTimestamp(post.createdAt);
+  const edittedTime = reformatTimestamp(post.updatedAt);
   // increase post view
   await actionService.viewPost(postId, currentUserId);
   res.render('post/post-detail', {
@@ -90,6 +93,8 @@ export const getPostById = asyncHandler(async (req: Request, res: Response) => {
     post,
     isOwner,
     comments: post.comments,
+    postedTime,
+    edittedTime
   });
 });
 
@@ -136,7 +141,7 @@ export const deletePost = [
 
     try {
       await postService.deletePost(postId, currentUserId);
-      res.redirect('/posts/fyp/1');
+      res.redirect('/posts/fyp');
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: t('error.deleteFailed') });

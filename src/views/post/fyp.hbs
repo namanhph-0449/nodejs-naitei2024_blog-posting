@@ -2,31 +2,34 @@
 <article class="content-page page article i01">
   <main>
     <!-- Intro Section -->
-    <section class="lead">
-      <div class="lead--inner">
+    <section class="intro-section">
+      <div class="intro-content">
         <h2>{{ title }}</h2>
         <h3>
-          <a href="/posts/create">{{ t 'menu.createBlog' }}</a>
+          <a href="/posts/create" class="create-blog-link">{{ t 'menu.createBlog' }}</a>
         </h3>
       </div>
     </section>
-    {{> render_post }}
+
+    <div class="post-section">
+      {{> render_post }}
+    </div>
     <!-- Pagination Controls -->
-    <nav class="pagination" aria-label="Page navigation">
-      <ul>
+    <nav aria-label="Page navigation">
+      <div class="flex">
         {{#if (gt currentPage 1)}}
-        <li>
-          <a href="/posts/fyp/{{subtract currentPage 1}}" class="btn-lg">
+        <div class="pagination-button">
+          <a href="/posts?page={{subtract currentPage 1}}" class="btn-lg">
           {{ t 'menu.previous' }}
           </a>
-        </li>
+        </div>
         {{/if}}
-        <li>
-          <a href="/posts/fyp/{{add currentPage 1}}" class="btn-lg">
+        <div class="pagination-button">
+          <a href="/posts?page={{add currentPage 1}}" class="btn-lg">
           {{ t 'menu.next' }}
           </a>
-        </li>
-      </ul>
+        </div>
+      </div>
     </nav>
   </main>
 </article>

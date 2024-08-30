@@ -85,7 +85,7 @@ export const postLogin = asyncHandler(async (req: Request, res: Response) => {
     else { // Create session and redirect
       req.session.user = result;
       req.flash('flashMessage', t('success.login'));
-      res.redirect('/posts/fyp/1');
+      res.redirect('/posts/fyp');
     }
   }
 });

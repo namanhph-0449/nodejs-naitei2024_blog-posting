@@ -1,41 +1,54 @@
 <div class="container mt-4">
   {{#if post}}
-    <div class="post-detail bg">
-      <div class="post-info">
-        <p>{{ post.user.username }}</p>
-        <p>{{ t 'content.createdAt' }}: {{ post.createdAt }}</p>
+    <div class="post-detail">
+      <!-- Post Info -->
+      <div class="post-info flex">
+        <p> Posted by: {{ post.user.username }}</p>
+        <div class="create-edit-timestamp">
+          <p>{{ t 'content.createdAt' }}: {{ postedTime }}</p>
+          <p>{{ t 'content.updatedAt' }}: {{ edittedTime }}</p>
+        </div>
       </div>
-      <div class="post-info">
-      <div>
+      <!-- Post Content -->
+      <div class="post-content">
+        <h1>{{ post.title }}</h1>
+        {{{ post.content }}}
+      </div>
+      <!-- Post Stats -->
+      <div class="post-stats">
         <p>
           <i class="fa fa-eye fa-lg"></i> {{ post.stats.views }} {{ t 'content.view'}}
           <i class="fa fa-heart fa-lg"></i> {{ post.stats.likes }} {{ t 'content.like'}}
           <i class="fa fa-comment fa-lg"></i> {{ post.stats.comments }} {{ t 'content.comment'}}
         </p>
       </div>
-      <p>{{ t 'content.updatedAt' }}: {{ post.updatedAt }}</p>
-    </div>
-      <div class="post-content">
-        <center><h1>{{ post.title }}</h1></center>
-        {{{ post.content }}}
-      </div>
-
+      <!-- Post Tags -->
       {{#if post.tags.length}}
-      <div class="post-tags mt-3">
+      <div class="post-tags">
         <strong>{{ t 'content.tags' }}</strong>
-        <ul class="list-inline">
+        <ul class="tag-list">
           {{#each post.tags}}
-            <li class="list-inline-item">
+            <li>
               <a href="/posts/tag/{{ this.id }}" class="badge badge-primary">{{ this.name }}</a>
             </li>
           {{/each}}
         </ul>
       </div>
       {{/if}}
-
+      <!-- Edit Button for Post Owner -->
       {{#if isOwner}}
         <a href="/posts/update/{{post.postId}}" class="btn btn-secondary">{{ t 'menu.edit' }}</a>
       {{/if}}
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="actions">
+      <button class="like-button">
+        <i class="fa fa-thumbs-up fa-lg"></i> {{ t 'menu.like' }}
+      </button>
+      <button class="bookmark-button">
+        <i class="fa fa-bookmark fa-lg"></i> {{ t 'menu.bookmark' }}
+      </button>
     </div>
 
     <!-- Comment Section -->
@@ -43,9 +56,8 @@
       <h3>{{ t 'content.comment' }}</h3>
       <!-- Toggle Comment Form Button -->
       <button id="toggleCommentForm" class="btn btn-info mb-3">{{ t 'content.addComment' }}</button>
-
       <!-- Add Comment Form -->
-      <form action="/comments/create" method="POST" id="commentForm" data-post-id="{{ post.postId }}" class="mt-3" style="display: none;">
+      <form action="/comments/create" method="POST" id="commentForm" data-post-id="{{ post.postId }}" class="comment-form" style="display: none;">
         <input type="hidden" name="userId" value="{{ session.user.id }}">
         <input type="hidden" name="postId" value="{{ post.postId }}">
         <input type="hidden" name="parentCommentId" value="">
@@ -57,14 +69,12 @@
       </form>
       <!-- Comments -->
       {{#if comments.length}}
-        <ul class="list-unstyled">
+        <ul class="comment-list">
           {{#each comments}}
-            <li class="media mb-3">
-              <div class="media-body">
-                <h5 class="mt-0 mb-1">{{ this.user.username }}</h5>
-                <p>{{ this.content }}</p>
-                <small>{{ t 'content.createdAt' }}: {{ this.createdAt }}</small>
-              </div>
+            <li class="comment">
+              <h5>{{ this.user.username }}</h5>
+              <p>{{ this.content }}</p>
+              <small>{{ t 'content.createdAt' }}: {{ this.createdAt }}</small>
             </li>
           {{/each}}
         </ul>
@@ -73,14 +83,6 @@
       {{/if}}
     </div>
 
-    <div class="actions mt-4">
-      <button class="like-button">
-        <i class="fa fa-thumbs-up fa-lg"></i> {{ t 'menu.like' }}
-      </button>
-      <button class="bookmark-button">
-        <i class="fa fa-bookmark fa-lg"></i> {{ t 'menu.bookmark' }}
-      </button>
-    </div>
   {{else}}
     <p>{{ t 'error.postNotFound' }}</p>
   {{/if}}

@@ -6,8 +6,8 @@ const router = express.Router();
 router.get('/create', postController.renderPostForm);
 router.post('/create', postController.createPost);
 
-router.get('/:page', postController.getPostsForGuest);
-router.get('/fyp/:page', postController.getFYPPosts);
+router.get('/', postController.getPostsForGuest);
+router.get('/fyp', postController.getFYPPosts);
 
 router.get('/detail/:id', postController.getPostById);
 
