@@ -1748,6 +1748,7 @@ button[type="submit"]:hover {
 display: flex;
 justify-content: space-between;
 align-items: center;
+margin-bottom: 15px;
 }
 
 .post-visibility {
@@ -2219,4 +2220,13 @@ color: #666;
   margin-bottom: 10px;
   font-size: 16px;
   color: #bf360c;
+}
+.inline-visibile-edit {
+  padding: 4px !important;
+  font-size: 12px !important;
+}
+
+.inline-visibility-form {
+  margin: 0 !important;
+  padding: 0 !important;
 }

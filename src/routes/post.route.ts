@@ -14,6 +14,8 @@ router.get('/detail/:id', postController.getPostById);
 router.get('/update/:id', postController.renderUpdateForm);
 router.post('/update/:id', postController.updatePost);
 
+router.post('/update/:id/visibility', postController.updatePostVisibility);
+
 router.get('/delete/:id', postController.deletePost);
 
 export default router;

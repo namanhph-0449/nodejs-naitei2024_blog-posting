@@ -4,7 +4,8 @@
     "logIn": "Log In",
     "logOut": "Log Out",
     "myProfile": "My Profile",
-    "posts": "Posts"
+    "posts": "Posts",
+    "users": "Users List"
   },
   "title": {
     "default": "FC3 Blog",
@@ -14,7 +15,8 @@
     "userProfile": "Profile | FC3 Blog",
     "createBlog": "Create Blog",
     "editBlog": "Edit Blog",
-    "header": "Unleash your creativity"
+    "header": "Unleash your creativity",
+    "users": "Users"
   },
   "placeholder": {
     "pwd": "Password",
@@ -37,7 +39,9 @@
     "next": "Next",
     "like": "Like",
     "comment": "Comment",
-    "bookmark": "Bookmark"
+    "bookmark": "Bookmark",
+    "addNewUser": "Add New User",
+    "update": "Update"
   },
   "content" : {
     "username": "Username",
@@ -63,7 +67,11 @@
     "noComment": "No Comment",
     "addComment": "Add Comment",
     "noImage": "No Image",
-    "postedBy": "Posted by"
+    "postedBy": "Posted by",
+    "limited": "Limited",
+    "public": "Public",
+    "private": "Private",
+    "pinned": "Pinned"
   },
   "success": {
     "default": "OK",

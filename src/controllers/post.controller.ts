@@ -148,3 +148,20 @@ export const deletePost = [
     }
   })
 ];
+
+export const updatePostVisibility = [
+  isAuthenticated,
+  asyncHandler(async (req: Request, res: Response) => {
+    const postId = parseInt(req.params.id, 10);
+    const currentUserId = req.session.user?.id || 0;
+    const newVisibility = req.body.visible;
+
+    try {
+      await postService.updatePostVisibility(postId, newVisibility, currentUserId);
+      res.redirect(`/me`);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: t('error.updateFailed') });
+    }
+  })
+];

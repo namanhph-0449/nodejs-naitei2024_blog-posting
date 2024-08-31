@@ -146,4 +146,14 @@ export class PostService {
     }
     return this.postRepository.remove(post);
   }
+
+  async updatePostVisibility(postId: number, visibility: PostVisibility, userId: number) {
+    const post = await this.getPostById(userId, postId);
+    if (!post) {
+      throw new Error('Post not found or not authorized');
+    }
+    post.visible = visibility;
+    await this.postRepository.save(post);
+  }
+  
 }

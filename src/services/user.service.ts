@@ -8,9 +8,22 @@ import { UserStatus } from '../constants/user-status';
 import { RegisterDto } from '../dtos/register.dto';
 import { LoginDto } from '../dtos/login.dto';
 import { UserInfoDto, PasswordDto } from '../dtos/user.info.dto';
+import { PAGE_SIZE } from '../constants/post-constant';
 
 export class UserService {
   private userRepository = AppDataSource.getRepository(User);
+
+  async getAllUsers(page: number = 1) {
+    const pageSize = PAGE_SIZE;
+    const offSet = (page - 1) * pageSize;
+
+    const users = await this.userRepository.find({
+      take: pageSize,
+      skip: offSet,
+      order: { createdAt: 'DESC' },
+    });
+    return users;
+  }
 
   async getUserById(userId: number) {
     return await this.userRepository.findOne({
