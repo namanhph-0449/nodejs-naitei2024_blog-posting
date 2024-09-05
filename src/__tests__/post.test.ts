@@ -50,10 +50,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  if (user) await userRepository.remove(user);
-  if (existedUser) await userRepository.remove(existedUser);
   if (post) await postRepository.remove(post);
   if (existed_post) await postRepository.remove(existed_post);
+  if (user) await userRepository.remove(user);
+  if (existedUser) await userRepository.remove(existedUser);
   await connection.destroy();
 });
 
@@ -80,6 +80,27 @@ describe('Create Post', () => {
 });
 
 describe('Get Post(s)', () => {
+  it('should return public posts', async () => {
+    const posts = await postService.getPostsByVisibility(PostVisibility.PUBLIC);
+    expect(posts).toBeTruthy();
+  });
+
+  it('should return top posts', async () => {
+    const query_limit = 3;
+    const posts = await postService.getTopPosts(query_limit, undefined);
+    expect(posts.length).toBe(query_limit);
+  });
+
+  it('should return posts of current user', async () => {
+    const posts = await postService.getPostsByUserId(user!.userId, user!.userId);
+    expect(posts).toBeTruthy();
+  });
+
+  it('should return posts of other user', async () => {
+    const posts = await postService.getPostsByUserId(user!.userId, undefined);
+    expect(posts).toBeTruthy();
+  });
+
   it('should return Post Not Found error when retrieving not existed post', async () => {
     await expect(postService.getPostById(undefined, post!.postId+1))
       .rejects
@@ -99,6 +120,22 @@ describe('Get Post(s)', () => {
 
   it('should return Posts for Guest', async () => {
     const posts = await postService.getPostsForGuest();
+    expect(posts).toBeTruthy();
+  });
+
+  it('should return Posts for logged in user', async () => {
+    const posts = await postService.getFYPPosts(user!.userId);
+    expect(posts).toBeTruthy();
+  });
+
+  it('should find posts by pattern', async () => {
+    const author_pattern = "current username";
+    const result = await postService.getPostsByPattern(author_pattern, user!.userId);
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  it('should return posts of specific tags', async () => {
+    const posts = await postService.getPostsByTag(1);//tagId
     expect(posts).toBeTruthy();
   });
 });
@@ -142,6 +179,12 @@ describe('Delete Post', () => {
     // delete existed user's post
     await postService.deletePost(existed_post!.postId, existedUser!.userId);
     await expect(postService.getPostById(existedUser!.userId, existed_post!.postId))
+      .rejects
+      .toThrowError('Post not found');
+  });
+
+  it('should return error when deleting not existed post', async () => {
+    await expect(postService.deletePost(post!.postId, user!.userId))
       .rejects
       .toThrowError('Post not found');
   });

@@ -31,7 +31,7 @@ export class ActionService {
     return action;
   }
 
-  private async updatePostStats(postId: number, increment: boolean, type: ActionType) {
+  async updatePostStats(postId: number, increment: boolean, type: ActionType) {
     const postStats = await this.postStatsRepository.findOne({
       where: { post: { postId } },
     });
@@ -48,7 +48,7 @@ export class ActionService {
     }
   }
 
-  private async getExistingAction(type: ActionType, userId: number, postId: number) {
+  async getExistingAction(type: ActionType, userId: number, postId: number) {
     return await this.actionRepository.findOne({
       where: {
         type,

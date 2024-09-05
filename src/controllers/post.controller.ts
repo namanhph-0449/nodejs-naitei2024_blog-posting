@@ -97,8 +97,6 @@ export const getPostById = asyncHandler(async (req: Request, res: Response) => {
       createdAt: reformatTimestamp(comment.createdAt),
     };
   });
-  // increase post view
-  await actionService.viewPost(postId, currentUserId);
   res.render('post/post-detail', {
     title: post.title,
     post,
@@ -107,6 +105,37 @@ export const getPostById = asyncHandler(async (req: Request, res: Response) => {
     postedTime,
     edittedTime
   });
+});
+
+export const searchPost = asyncHandler(async (req: Request, res: Response) => {
+  const pattern = req.query.q?.toString();
+  if (!pattern) { // render search page
+    res.render('post/search-results', {
+      title: 'title.searchPage',
+    });
+  }
+  else {
+    const currentUserId = req.session.user?.id;
+    const posts = await postService.getPostsByPattern(pattern, currentUserId);
+    res.render('post/search-results', { // render result
+      title: 'title.searchResult',
+      query: pattern,
+      posts
+    });
+  } 
+});
+
+export const getPostsOfTag = asyncHandler(async (req: Request, res: Response) => {
+  const tagId = parseInt(req.params.id, 10);
+  const posts = await postService.getPostsByTag(tagId);
+  const tagName = posts.length > 0 
+    ? posts[0].tags.find((tag) => tag.id === tagId)?.name 
+    : '';
+  res.render('post/search-results', {
+    title: 'title.searchResult',
+    query: tagName, 
+    posts
+  });;
 });
 
 export const getTagsOfPost = asyncHandler(async (req: Request, res: Response) => {

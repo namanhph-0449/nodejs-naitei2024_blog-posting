@@ -2,21 +2,15 @@ import { AppDataSource } from '../config/data-source';
 import { Comment } from '../entities/comment.entity';
 import { PostService } from './post.service';
 import { UserService } from './user.service';
+import { ActionService } from './action.service';
+import { ActionType } from '../constants/action-types';
 
 const userService = new UserService();
 const postService = new PostService();
-  
+const actionService = new ActionService();
 
 export class CommentService {
   private commentRepository = AppDataSource.getRepository(Comment);
-
-  private async isExistComment(commentId: number): Promise<void> {
-    const comment = await this.commentRepository.findOne({ where: { commentId } });
-
-    if (!comment) {
-      throw new Error('Comment not found');
-    }
-  }
 
   async createComment(
     commentData: Partial<Comment>,
@@ -36,7 +30,7 @@ export class CommentService {
     }
 
     if (parentCommentId !== null) {
-      const parent = await this.commentRepository.findOne({ where: { commentId: 6 } })
+      const parent = await this.commentRepository.findOne({ where: { commentId: parentCommentId } })
 
       if (parent !== null) {
         const comment = this.commentRepository.create({
@@ -56,7 +50,13 @@ export class CommentService {
       post,
     });
 
-    return await this.commentRepository.save(comment);
+    // Save the comment and handle potential errors
+    const savedComment = await this.commentRepository.save(comment);
+    // Update post comment count only if comment creation is successful
+    if (savedComment) {
+      await actionService.updatePostStats(postId, true, ActionType.COMMENT);
+    }
+    return savedComment;
   }
 
   async getCommentsByPost(userId: number | undefined, postId: number): Promise<Comment[]> {
@@ -74,8 +74,8 @@ export class CommentService {
   }
 
   async deleteComment(commentId: number): Promise<void> {
-    await this.isExistComment(commentId);
-
+    const comment = await this.getCommentById(commentId);
+    await actionService.updatePostStats(comment.post.postId, false, ActionType.COMMENT);
     await this.commentRepository.delete(commentId);
   }
 

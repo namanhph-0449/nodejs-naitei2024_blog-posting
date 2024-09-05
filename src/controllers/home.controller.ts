@@ -4,14 +4,20 @@ import { validateSessionRole,
         sanitizeContent,
         validateActiveUser } from '../utils/';
 import { UserService } from '../services/user.service';
+import { PostService } from '../services/post.service';
 import { UserWithBlogsDto } from '../dtos/user.info.dto';
+import { TOP_POSTS_LIMIT } from '../constants/post-constant';
 
 const userService = new UserService();
+const postService = new PostService();
 
 export const index = asyncHandler(async (req: Request, res: Response) => {
+  const currentUserId = req.session.user?.id;
+  const posts = await postService.getTopPosts(TOP_POSTS_LIMIT, currentUserId);
   res.render('index', {
     title: 'title.default',
-    userRole: validateSessionRole(req)
+    userRole: validateSessionRole(req),
+    posts
   });
 });
 

@@ -61,3 +61,12 @@ export function mapTagsToTagEntities(tags: string[]): Tag[] {
 export function mapTagEntitiesToTags(tags: Tag[]): string[] {
   return tags.map(tag => tag.name);
 }
+
+export function extractIMG(content: string) {
+  const regex = /<img\s+[^>]*src="([^"]+)"/;
+  const match = content.match(regex);
+  if (match) {
+    return match[1];
+  }
+  return '';
+}

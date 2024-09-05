@@ -8,104 +8,33 @@
         <h3>
           Check out our top posts!
           <br />
-          To see our newest posts, check
+          To see our latest posts, check
           <a href="/posts"> here</a>.</h3>
       </div>
     </section>
-    <!-- Pa01 -->
+    {{#each posts}}
     <section class="iv iv01">
       <div class="iv--inner clearfix">
-        <div class="iv--inner--image"><img src="img/main.jpg" /></div>
+      {{#if imageUrl}}
+        <div class="iv--inner--image"><img src="{{imageUrl}}" /></div>
+      {{else}}
+        <div class="iv--inner--image"><img src="/img/main.jpg" /></div>
+      {{/if}}
         <div class="iv--inner--text">
-          <div class="iv--inner--text--block">
-            <div class="num">By Someone</div>
-            <div class="iv--inner--text--block--contents">
-              <h3>Title</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Curabitur et convallis quam. Sed diam odio, venenatis nec lectus
-                tincidunt, feugiat molestie felis. Ut et tortor sed eros dapibus
-                tincidunt. Praesent ante nibh, tristique nec volutpat vel,
-                condimentum eu lacus. Aliquam non elit vel felis euismod
-                scelerisque euismod vel turpis. Aliquam tincidunt in leo sed
-                mollis. Mauris in justo metus. Cras porttitor vehicula
-                elementum. Nulla sit amet quam scelerisque, pulvinar erat sit
-                amet, lacinia nulla. Cras sit amet velit accumsan felis rutrum
-                efficitur. Vivamus quis elit non justo vulputate venenatis a vel
-                ex. Sed volutpat varius tortor eu gravida. Donec lobortis nibh a
-                arcu porta, et pulvinar lorem fringilla. Vivamus in elementum
-                lorem, sed ullamcorper quam. Fusce varius a sapien sed aliquet.
-                <a href="#" class="btn btn-secondary" style="center">
-                  Read More
-                </a>
-              </p>
-            </div>
-          </div>
+        <div class="iv--inner--text--block">
+        <div class="num"><a href="/users/{{user.userId}}">{{user.username}}</a></div>
+        <div class="iv--inner--text--block--contents">
+          <h3>{{ this.title }}</h3>
+          <p>
+            {{{truncate (sanitize this.content) 500}}}
+            <a href="/posts/detail/{{ this.postId }}" class="btn btn-secondary">{{ t 'menu.readMore' }}</a>
+          </p>
+        </div>
+        </div>
+        </div>
         </div>
       </div>
     </section>
-    <!-- Pa02 -->
-    <section class="iv iv02">
-      <div class="iv--inner clearfix">
-        <div class="iv--inner--image"><img src="img/main.jpg" /></div>
-        <div class="iv--inner--text">
-          <div class="iv--inner--text--block">
-            <div class="num">By Anonymous</div>
-            <div class="iv--inner--text--block--contents">
-              <h3>Title</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus pretium nunc in tempor sollicitudin. Cras placerat
-                quam et ex maximus efficitur. Praesent imperdiet, nunc quis
-                tincidunt consequat, turpis turpis imperdiet dui, non
-                condimentum nisi orci sit amet ipsum. Aliquam libero tortor,
-                scelerisque vel odio eu, dapibus tincidunt orci. Duis eu justo
-                tincidunt, blandit quam non, tempor magna. Quisque semper risus
-                diam, eget tincidunt nisi molestie sagittis. Proin auctor,
-                lectus tempus dapibus auctor, arcu libero pulvinar elit, vel
-                pretium quam arcu id arcu. Nunc in tortor eget dolor ultricies
-                euismod. Praesent placerat risus a orci feugiat lobortis.
-                Integer sit amet euismod turpis. Vestibulum vehicula imperdiet
-                libero, in gravida risus fringilla auctor. In ac venenatis mi.
-                Cras at mi diam. Morbi ultricies consectetur lacinia.
-                <a href="#" class="btn btn-secondary" style="center">
-                  Read More
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Pa03 -->
-    <section class="iv iv03">
-      <div class="iv--inner clearfix">
-        <div class="iv--inner--image"><img src="img/main.jpg" /></div>
-        <div class="iv--inner--text">
-          <div class="iv--inner--text--block">
-            <div class="num">By Who</div>
-            <div class="iv--inner--text--block--contents">
-              <h3>Title</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Integer leo mi, convallis non vulputate non, convallis vel
-                risus. Nullam lobortis libero lacus, at interdum turpis commodo
-                a. Donec eu ex vel purus vehicula viverra. Proin condimentum
-                egestas tortor semper ornare. Aliquam dictum lorem dolor, ac
-                semper arcu luctus sit amet. Praesent iaculis nisi libero, id
-                tristique magna pretium at. Maecenas sem diam, ullamcorper
-                congue lacus venenatis, volutpat mattis lorem. Aenean quis velit
-                rhoncus dui elementum venenatis nec et sem. Nulla aliquam
-                pulvinar elit iaculis dapibus. In hac habitasse platea dictumst.
-                Aenean sagittis ut nunc at finibus. Duis efficitur, purus sit
-                amet sodales fermentum, quam massa gravida leo, et maximus massa
-                quam nec mi. Praesent ut leo non erat commodo pellentesque.
-                Praesent vitae ligula tempus arcu laoreet molestie.
-                <a href="#" class="btn btn-secondary" style="center">
-                  Read More
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    {{/each}}
   </main>
 </article>
