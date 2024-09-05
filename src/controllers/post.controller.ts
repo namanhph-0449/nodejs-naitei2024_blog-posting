@@ -2,13 +2,15 @@ import { Request, Response } from 'express';
 import { CreatePostDto } from '../dtos/post/create-post.dto';
 import { ActionService } from '../services/action.service';
 import { PostService } from '../services/post.service';
+import { CommentService } from '../services/comment.service';
 import asyncHandler from 'express-async-handler';
 import i18next from 'i18next';
 import { PostVisibility } from '../constants/post-visibility';
 import { Post } from '../entities/post.entity';
 import { isAuthenticated } from '../middlewares/auth.middleware';
-import { CommentService } from '../services/comment.service';
-import { reformatTimestamp } from '../utils';
+import { reformatTimestamp,
+        mapTagsToTagEntities,
+        mapTagEntitiesToTags } from '../utils';
 
 const { t } = i18next;
 const actionService = new ActionService();
@@ -25,10 +27,13 @@ export const createPost = [
   isAuthenticated,
   asyncHandler(async (req: Request, res: Response) => {
     const currentUserId = req.session.user?.id || 0;
-
     const createPostDto: CreatePostDto = req.body;
+    if (req.body.tags) {
+      // convert tags from string[] to Tag[]
+      const tagList = req.body.tags.split(",");
+      createPostDto.tags = mapTagsToTagEntities(tagList);
+    }
     await postService.create(createPostDto, currentUserId);
-
     res.redirect(`/posts/fyp`);
   })
 ];
@@ -59,8 +64,7 @@ export const getFYPPosts = [
   isAuthenticated,
   asyncHandler(async (req: Request, res: Response) => {
     const currentUserId = req.session.user!.id;
-    const page = parseInt(req.params.page as string, 10) || 1;
-
+    const page = parseInt(req.query.page as string, 10) || 1;
     try {
       const posts = await postService.getFYPPosts(currentUserId, page);
       res.render('post/fyp', {
@@ -84,18 +88,34 @@ export const getPostById = asyncHandler(async (req: Request, res: Response) => {
   const post = await postService.getPostById(currentUserId, postId);
   validatePost(post);
   const isOwner = post.user.userId === currentUserId;
+  // reformat datetime of post and its comments
   const postedTime = reformatTimestamp(post.createdAt);
   const edittedTime = reformatTimestamp(post.updatedAt);
+  const comments = post.comments.map((comment) => {
+    return {
+      ...comment,
+      createdAt: reformatTimestamp(comment.createdAt),
+    };
+  });
   // increase post view
   await actionService.viewPost(postId, currentUserId);
   res.render('post/post-detail', {
     title: post.title,
     post,
     isOwner,
-    comments: post.comments,
+    comments,
     postedTime,
     edittedTime
   });
+});
+
+export const getTagsOfPost = asyncHandler(async (req: Request, res: Response) => {
+  const postId = parseInt(req.params.id, 10);
+  const currentUserId = req.session.user?.id;
+  const post = await postService.getPostById(currentUserId, postId);
+  validatePost(post);
+  const postTags = mapTagEntitiesToTags(post.tags);
+  res.json(postTags);
 });
 
 export const renderUpdateForm = asyncHandler(async (req: Request, res: Response) => {
@@ -121,10 +141,14 @@ export const updatePost = [
     const currentUserId = req.session.user?.id || 0;
 
     const updatePostDto: CreatePostDto = req.body;
-
+    if (req.body.tags) {
+      // convert tags from string[] to Tag[]
+      const tagList = req.body.tags.split(",");
+      updatePostDto.tags = mapTagsToTagEntities(tagList);
+    }
     try {
       await postService.updatePost(postId, updatePostDto, currentUserId);
-      res.redirect(`/posts/${postId}`);
+      res.redirect(`/posts/detail/${postId}`);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: t('error.updateFailed') });

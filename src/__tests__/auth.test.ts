@@ -9,18 +9,23 @@ import { UserInfoDto } from '../dtos/user.info.dto';
 let connection: DataSource;
 let userRepository: Repository<User>;
 let userService: UserService;
+let existedUser: User | null;
 
 beforeAll(async () => {
   connection = await AppDataSource.initialize();
   userRepository = AppDataSource.getRepository(User);
   userService = new UserService();
   // Create sample user, delete later
-  await userService.createUser({
-    email: 'existed_email@domain',
-    username: 'existed_username',
-    password: 'good_password',
-    confirm_password: 'good_password'
-  });
+  existedUser = await userService.getUserByUsername('existed_username');
+  if (!existedUser) {
+    await userService.createUser({
+      email: 'existed_email@domain',
+      username: 'existed_username',
+      password: 'good_password',
+      confirm_password: 'good_password'
+    });
+    existedUser = await userService.getUserByUsername('existed_username');
+  }
   // Make sure this user does not exists
   await userRepository.delete({ username: 'not_existed_username' });
 });
@@ -30,7 +35,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
-  await userRepository.delete({ username: 'existed_username' });
+  if (existedUser) await userRepository.remove(existedUser);
   await connection.destroy();
 });
 
@@ -69,6 +74,18 @@ describe('Register', () => {
     const result = await userService.createUser(params);
     expect(result.success).toBeFalsy();
     expect(result.errors).toBe('error.emailExist');
+  });
+
+  it('should return error when password mismatch', async () => {
+    const params = {
+      email: 'existed_email@domain',
+      username: 'valid_username',
+      password: 'valid_password',
+      confirm_password: 'mismatch_password'
+    };
+    const result = await userService.createUser(params);
+    expect(result.success).toBeFalsy();
+    expect(result.errors).toBe('error.passwordMismatch');
   });
 });
 

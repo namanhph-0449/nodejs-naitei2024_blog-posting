@@ -91,7 +91,6 @@ export class CommentService {
       }
 
       return comment;
-     // eslint-disable-next-line @typescript-eslint/no-unused-vars
      } catch (error) {
         throw new Error('Comment not found');
      }

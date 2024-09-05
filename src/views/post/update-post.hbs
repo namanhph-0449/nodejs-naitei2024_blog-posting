@@ -1,4 +1,5 @@
 <form action="/posts/update/{{post.postId}}" method="POST">
+  <button type="submit" disabled style="display: none" aria-hidden="true"></button>
   <div class="form-group">
     <label for="title">{{ title }}</label>
     <input type="text" class="form-control" id="title" name="title" value="{{ post.title }}" required>
@@ -13,12 +14,21 @@
       <option value="private" {{#if (eq post.visible postVisibility.VISIBLE)}}selected{{/if}}>Private</option>
       <option value="limited" {{#if (eq post.visible postVisibility.LIMITED)}}selected{{/if}}>Limited</option>
       <option value="public" {{#if (eq post.visible postVisibility.PUBLIC)}}selected{{/if}}>Public</option>
-      <option value="pinned" {{#if (eq post.visible postVisibility.PINNED)}}selected{{/if}}>Pinned</option>
     </select>
+  </div>
+
+  <div class="form-group">
+    <label for="tags">Tags</label>
+    <input type="textarea" class="form-control" id="textBox"></input>
+    <br/>
+    <!-- Selected tags show here -->
+    <div class="target" contenteditable="false"></div>
+    <input type="hidden" id="hiddenTags" name="tags">
   </div>
   <button type="submit" class="btn btn-primary">Update</button>
 </form>
 
+<script src="/js/tags.js"></script>
 <script>
   CKEDITOR.replace('content');
 </script>

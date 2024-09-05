@@ -19,13 +19,13 @@
       <div class="flex">
         {{#if (gt currentPage 1)}}
         <div class="pagination-button">
-          <a href="/posts?page={{subtract currentPage 1}}" class="btn-lg">
+          <a href="/posts/fyp?page={{subtract currentPage 1}}" class="btn-lg">
           {{ t 'menu.previous' }}
           </a>
         </div>
         {{/if}}
         <div class="pagination-button">
-          <a href="/posts?page={{add currentPage 1}}" class="btn-lg">
+          <a href="/posts/fyp?page={{add currentPage 1}}" class="btn-lg">
           {{ t 'menu.next' }}
           </a>
         </div>

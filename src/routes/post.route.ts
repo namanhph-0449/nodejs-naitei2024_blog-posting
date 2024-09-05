@@ -9,6 +9,7 @@ router.post('/create', postController.createPost);
 router.get('/', postController.getPostsForGuest);
 router.get('/fyp', postController.getFYPPosts);
 
+router.get('/detail/:id/tags', postController.getTagsOfPost);
 router.get('/detail/:id', postController.getPostById);
 
 router.get('/update/:id', postController.renderUpdateForm);

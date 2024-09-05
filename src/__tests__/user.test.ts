@@ -25,13 +25,16 @@ beforeAll(async () => {
   });
   user = await userService.getUserByUsername('username');
   // existed user
-  await userService.createUser({
-    email: 'existed_email@domain',
-    username: 'existed_username',
-    password: 'good_password',
-    confirm_password: 'good_password'
-  });
   existedUser = await userService.getUserByUsername('existed_username');
+  if (!existedUser) {
+    await userService.createUser({
+      email: 'existed_email@domain',
+      username: 'existed_username',
+      password: 'good_password',
+      confirm_password: 'good_password'
+    });
+    existedUser = await userService.getUserByUsername('existed_username');
+  }
 });
 
 afterAll(async () => {
@@ -68,6 +71,35 @@ describe('Update User', () => {
     const result = await userService.updateUser(params);
     expect(result.success).toBeFalsy();
     expect(result.errors).toBe('error.emailExist');
+  });
+
+  it('should update username of existing user', async () => {
+    const newUsername = 'new_username';
+    const params: UserInfoDto = {
+      id: user!.userId,
+      email: user!.email,
+      username: newUsername,
+      role: user!.role
+    };
+    const result = await userService.updateUser(params);
+    const updatedUser = await userService.getUserByUsername(newUsername);
+    expect(result.success).toBeTruthy();
+    expect(result.errors).toBeUndefined();
+    expect(updatedUser!.userId).toBe(user!.userId);
+    expect(updatedUser!.email).toBe(user!.email);
+  });
+
+  it('should not update username because of existed username', async () => {
+    const newUsername = existedUser!.username;
+    const params: UserInfoDto = {
+      id: user!.userId,
+      email: user!.email,
+      username: newUsername,
+      role: user!.role
+    };
+    const result = await userService.updateUser(params);
+    expect(result.success).toBeFalsy();
+    expect(result.errors).toBe('error.usernameExist');
   });
 
   it('should not update password because of wrong old password', async () => {
