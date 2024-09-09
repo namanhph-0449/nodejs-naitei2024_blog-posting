@@ -14,13 +14,16 @@
     "userProfile": "Profile | FC3 Blog",
     "createBlog": "Create Blog",
     "editBlog": "Edit Blog",
-    "header": "Unleash your creativity"
+    "header": "Unleash your creativity",
+    "searchPage": "Search for Posts",
+    "searchResult": "Search Result of"
   },
   "placeholder": {
     "pwd": "Password",
     "newPwd": "New Password",
     "confirmNewPwd": "Confirm Password",
-    "deactiveReason": "e.g. Violate rules?"
+    "deactiveReason": "e.g. Violate rules?",
+    "search" : "Search for something?"
   },
   "menu": {
     "register": "Register",
@@ -37,7 +40,8 @@
     "next": "Next",
     "like": "Like",
     "comment": "Comment",
-    "bookmark": "Bookmark"
+    "bookmark": "Bookmark",
+    "latestPost": "See latest posts"
   },
   "content" : {
     "username": "Username",

@@ -30,6 +30,9 @@ export class Post {
   @Column({ type: 'text' })
   content: string;
 
+  @Column({ nullable: true })
+  imageUrl: string;
+
   @Column({ type: 'enum', enum: PostVisibility, default: PostVisibility.PRIVATE })
   visible: PostVisibility;
 

@@ -7,7 +7,7 @@
     "start": "node dist/bin/www",
     "dev": "nodemon src/app.ts",
     "lint": "npx eslint src/**/*.{js,ts}",
-    "test": "jest --watchAll --verbose --coverage",
+    "test": "jest --watchAll --runInBand --verbose --coverage",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "npm run typeorm migration:generate -- -d src/config/data-source.ts src/migrations/InitialMigration",
     "migration:run": "npm run typeorm migration:run -- -d src/config/data-source.ts"
@@ -22,6 +22,7 @@
     "express-async-handler": "^1.2.0",
     "express-session": "^1.18.0",
     "express-validator": "^7.1.0",
+    "fuse.js": "^7.0.0",
     "handlebars-helpers": "^0.10.0",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
