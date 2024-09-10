@@ -7,6 +7,7 @@ import postRouter from './post.route';
 import userRouter from './user.route';
 import commentRouter from './comment.route';
 import tagRouter from './tag.route';
+import apiRouter from '../api/routes/api.route';
 
 const router: Router = Router();
 
@@ -17,5 +18,6 @@ router.use('/posts', postRouter);
 router.use('/users', userRouter);
 router.use('/comments', commentRouter);
 router.use('/tags', tagRouter);
+router.use('/api', apiRouter);
 
 export default router;

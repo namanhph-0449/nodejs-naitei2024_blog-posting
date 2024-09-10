@@ -67,7 +67,7 @@ export class PostService {
 
     const posts = await this.postRepository.find({
       where: { visible: PostVisibility.PUBLIC },
-      relations: ['user'],
+      relations: ['user', 'tags'],
       order: { createdAt: 'DESC' },
       skip: offset,
       take: pageSize,
@@ -113,6 +113,36 @@ export class PostService {
       ignoreLocation: true,
     });
     const result = fuse.search(pattern);
+    return result.map((item) => item.item);
+  }
+
+  async getPostsByFilter(
+    filter: { title?: string; content?: string; tags?: string[] },
+    currentUserId: number | undefined
+  ) {
+    const posts = await this.postRepository.find({
+      relations: ['user', 'tags'],
+      where: [
+        { visible: PostVisibility.PUBLIC },
+        ...(currentUserId ? [{ user: { userId: currentUserId } }] : [])
+      ]
+    });
+    const fuse = new Fuse(posts, {
+      keys: [
+        ...(filter.title ? ['title'] : []),
+        ...(filter.content ? ['content'] : []),
+        ...(filter.tags ? ['tags.name'] : [])
+      ],
+      useExtendedSearch: true,
+      threshold: 0,
+      ignoreLocation: true,
+    });
+    const searchPattern = [
+      filter.title,
+      filter.content,
+      filter.tags ? filter.tags.join(' ') : ''
+    ].filter(Boolean).join(' ');
+    const result = fuse.search(searchPattern);
     return result.map((item) => item.item);
   }
 
