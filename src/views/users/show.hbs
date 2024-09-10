@@ -81,42 +81,38 @@
         {{#if userPosts}}
         <div class="row">
           {{#each userPosts}}
-            {{#ifOdd @index}}
-              <div class="col-md-6">
-                <!-- column 1 -->
-                <div class="card mb-3">
-                  <div class="card-body">
-                    <div class="post-header">
-                      <h3>{{{ this.title }}}</h3>
+            <div class="col-md-6">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="post-header">
+                    <h3>{{{ this.title }}}</h3>
+
+                    <!-- If currentUser is the owner, show a form to edit visibility -->
+                    {{#if ../isOwner}}
+                      <form method="POST" action="/posts/update/{{ this.postId }}/visibility" class="inline-visibility-form">
+                        <div>
+                          <select class="form-control" id="visible" name="visible" required>
+                            <option value="private" {{#if (eq this.visible ../postVisibility.PRIVATE)}}selected{{/if}}>{{ t 'content.private' }}</option>
+                            <option value="limited" {{#if (eq this.visible ../postVisibility.LIMITED)}}selected{{/if}}>{{ t 'content.limited' }}</option>
+                            <option value="public" {{#if (eq this.visible ../postVisibility.PUBLIC)}}selected{{/if}}>{{ t 'content.public' }}</option>
+                            <option value="pinned" {{#if (eq this.visible ../postVisibility.PINNED)}}selected{{/if}}>{{ t 'content.pinned' }}</option>
+                          </select>
+                          <button type="submit" class="inline-visibile-edit">{{ t 'menu.update' }}</button>
+                        </div>
+                      </form>
+                    {{else}}
                       <p class="post-visibility">{{ this.visible }}</p>
-                    </div>
-                    <a href="/posts/detail/{{ this.postId }}" class="btn btn-success btn-lg">{{ t 'menu.view' }}</a>
-                    {{#if ../isOwner}} <!-- Check if the current user is the owner of the post -->
-                      <a href="/posts/update/{{ this.postId }}" class="btn btn-warning btn-lg">{{ t 'menu.edit'}}</a>
-                      <a href="/posts/delete/{{ this.postId }}" class="btn btn-danger btn-lg">{{ t 'menu.delete'}}</a>
                     {{/if}}
+
                   </div>
+                  <a href="/posts/detail/{{ this.postId }}" class="btn btn-success btn-lg">{{ t 'menu.view' }}</a>
+                  {{#if ../isOwner}}
+                    <a href="/posts/update/{{ this.postId }}" class="btn btn-warning btn-lg">{{ t 'menu.edit'}}</a>
+                    <a href="/posts/delete/{{ this.postId }}" class="btn btn-danger btn-lg">{{ t 'menu.delete'}}</a>
+                  {{/if}}
                 </div>
               </div>
-            {{/ifOdd}}
-            {{#ifEven @index}}
-              <div class="col-md-6">
-                <!-- column 2 -->
-                <div class="card mb-3">
-                  <div class="card-body">
-                    <div class="post-header">
-                      <h3>{{{ this.title }}}</h3>
-                      <p class="post-visibility">{{ this.visible }}</p>
-                    </div>
-                    <a href="/posts/detail/{{ this.postId }}" class="btn btn-success btn-lg">{{ t 'menu.view' }}</a>
-                    {{#if ../isOwner}} <!-- Check if the current user is the owner of the post -->
-                      <a href="/posts/update/{{ this.postId }}" class="btn btn-warning btn-lg">{{ t 'menu.edit'}}</a>
-                      <a href="/posts/delete/{{ this.postId }}" class="btn btn-danger btn-lg">{{ t 'menu.delete'}}</a>
-                    {{/if}}
-                  </div>
-                </div>
-              </div>
-            {{/ifEven}}
+            </div>
           {{/each}}
         </div>
         {{/if}}
@@ -126,7 +122,6 @@
         </div>
         {{/unless}}
       {{/if}}
-
       {{#unless userActive}}
         <p>{{ t 'error.userDeactivated' }}</p>
         <p>{{ t 'content.deactiveReason' }}: {{ user.deactiveReason }}</p>
@@ -135,3 +130,5 @@
   </div>
 </div>
 <script src="/js/script.js"></script>
+
+

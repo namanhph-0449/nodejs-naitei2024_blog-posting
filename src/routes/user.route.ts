@@ -4,6 +4,7 @@ import * as adminUserController from '../controllers/admin/user.controller';
 
 const router = express.Router();
 
+router.get('/', userController.getUsers);
 router.get('/:id', userController.getUserById);
 router.get('/:id/assign-admin', adminUserController.assignAdmin);
 router.post('/update/status', adminUserController.postUpdateStatus);

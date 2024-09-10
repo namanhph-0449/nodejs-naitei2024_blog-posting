@@ -1,0 +1,44 @@
+<div class="container">
+    <h2>{{title}}</h2>
+    
+    {{#if users.length}}
+    <div class="user-list">
+        {{#each users}}
+        <div class="user-item">
+            <a href="/users/{{this.userId}}" class="user-link">
+                <div class="user-info">
+                    <h3 class="user-name">{{this.username}}</h3>
+                    <p class="user-email">{{this.email}}</p>
+                </div>
+                <div class="user-meta">
+                    <span class="user-role">{{this.role}}</span>
+                    <span class="user-status {{#if (eq this.status ../userStatus.ACTIVE)}}active{{else}}inactive{{/if}}">
+                        {{#if (eq this.status ../userStatus.ACTIVE)}}Active{{else}}Inactive{{/if}}
+                    </span>
+                </div>
+            </a>
+        </div>
+        {{/each}}
+    </div>
+    {{else}}
+    <p>{{t 'error.userNotFound' }}</p>
+    {{/if}}
+
+    {{!-- Pagination controls --}}
+    <nav aria-label="Page navigation">
+      <div class="flex">
+        {{#if (gt currentPage 1)}}
+        <div class="pagination-button">
+          <a href="/users?page={{subtract currentPage 1}}" class="btn-lg">
+          {{ t 'menu.previous' }}
+          </a>
+        </div>
+        {{/if}}
+        <div class="pagination-button">
+          <a href="/users?page={{add currentPage 1}}" class="btn-lg">
+          {{ t 'menu.next' }}
+          </a>
+        </div>
+      </div>
+    </nav>
+</div> 

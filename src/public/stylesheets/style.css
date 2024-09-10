@@ -1765,6 +1765,7 @@ button[type="submit"]:hover {
 display: flex;
 justify-content: space-between;
 align-items: center;
+margin-bottom: 15px;
 }
 
 .post-visibility {
@@ -2263,4 +2264,82 @@ color: #666;
 }
 .cross:hover {
     background-color:red;
+    .inline-visibile-edit {
+    padding: 4px !important;
+    font-size: 12px !important;
+    }
+
+    .inline-visibility-form {
+    margin: 0 !important;
+    padding: 0 !important;
+    }
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.user-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+.user-item:hover {
+    background-color: #e9ecef;
+}
+
+.user-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info {
+    flex-grow: 1;
+}
+
+.user-name {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.user-email {
+    font-size: 1rem;
+    color: #666;
+}
+
+.user-meta {
+    text-align: right;
+}
+
+.user-role {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.user-status {
+    display: block;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.user-status.active {
+    color: green;
+}
+
+.user-status.inactive {
+    color: red;
 }

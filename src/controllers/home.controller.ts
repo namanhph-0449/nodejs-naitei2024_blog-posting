@@ -5,6 +5,7 @@ import { validateSessionRole,
         validateActiveUser } from '../utils/';
 import { UserService } from '../services/user.service';
 import { PostService } from '../services/post.service';
+import { PostVisibility } from '../constants/post-visibility';
 import { UserWithBlogsDto } from '../dtos/user.info.dto';
 import { TOP_POSTS_LIMIT } from '../constants/post-constant';
 
@@ -37,6 +38,7 @@ export const getMyProfile = asyncHandler(async (req: Request, res: Response) => 
   res.render('users/show', {
     title: 'title.myProfile',
     user: userDto,
+    postVisibility: PostVisibility,
     userActive: validateActiveUser(userDto?.status),
     userRole: userDto?.role,
     userPosts,
