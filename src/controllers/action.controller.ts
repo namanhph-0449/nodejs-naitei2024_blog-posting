@@ -6,6 +6,13 @@ import i18next from 'i18next';
 const { t } = i18next;
 const actionService = new ActionService();
 
+export const postView = asyncHandler(async (req: Request, res: Response) => {
+  const postId = req.body.postId;
+  const currentUserId = req.session.user?.id;
+  await actionService.viewPost(postId, currentUserId);
+  res.status(200).json({ success: true, message: t('success.view') });
+});
+
 export const postLike = asyncHandler(async (req: Request, res: Response) => {
   const postId = parseInt(req.params.id);
   const userId = req.session.user?.id;

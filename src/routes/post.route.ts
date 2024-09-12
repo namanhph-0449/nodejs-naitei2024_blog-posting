@@ -6,9 +6,13 @@ const router = express.Router();
 router.get('/create', postController.renderPostForm);
 router.post('/create', postController.createPost);
 
+router.get('/search', postController.searchPost);
+
 router.get('/', postController.getPostsForGuest);
 router.get('/fyp', postController.getFYPPosts);
 
+router.get('/tag/:id', postController.getPostsOfTag);
+router.get('/detail/:id/tags', postController.getTagsOfPost);
 router.get('/detail/:id', postController.getPostById);
 
 router.get('/update/:id', postController.renderUpdateForm);

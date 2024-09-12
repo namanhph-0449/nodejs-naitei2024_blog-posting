@@ -17,12 +17,11 @@ export class UserService {
     const pageSize = PAGE_SIZE;
     const offSet = (page - 1) * pageSize;
 
-    const users = await this.userRepository.find({
+    return await this.userRepository.find({
       take: pageSize,
       skip: offSet,
       order: { createdAt: 'DESC' },
     });
-    return users;
   }
 
   async getUserById(userId: number) {

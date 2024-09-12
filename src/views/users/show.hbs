@@ -92,10 +92,10 @@
                       <form method="POST" action="/posts/update/{{ this.postId }}/visibility" class="inline-visibility-form">
                         <div>
                           <select class="form-control" id="visible" name="visible" required>
-                            <option value="private" {{#if (eq this.visible 'private')}}selected{{/if}}>{{ t 'content.private' }}</option>
-                            <option value="limited" {{#if (eq this.visible 'limited')}}selected{{/if}}>{{ t 'content.limited' }}</option>
-                            <option value="public" {{#if (eq this.visible 'public')}}selected{{/if}}>{{ t 'content.public' }}</option>
-                            <option value="pinned" {{#if (eq this.visible 'pinned')}}selected{{/if}}>{{ t 'content.pinned' }}</option>
+                            <option value="private" {{#if (eq this.visible ../postVisibility.PRIVATE)}}selected{{/if}}>{{ t 'content.private' }}</option>
+                            <option value="limited" {{#if (eq this.visible ../postVisibility.LIMITED)}}selected{{/if}}>{{ t 'content.limited' }}</option>
+                            <option value="public" {{#if (eq this.visible ../postVisibility.PUBLIC)}}selected{{/if}}>{{ t 'content.public' }}</option>
+                            <option value="pinned" {{#if (eq this.visible ../postVisibility.PINNED)}}selected{{/if}}>{{ t 'content.pinned' }}</option>
                           </select>
                           <button type="submit" class="inline-visibile-edit">{{ t 'menu.update' }}</button>
                         </div>

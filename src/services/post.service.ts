@@ -4,11 +4,15 @@ import { PostVisibility } from '../constants/post-visibility';
 import { CreatePostDto } from '../dtos/post/create-post.dto';
 import { Post } from '../entities/post.entity';
 import { PostStats } from '../entities/post-stats.entity';
-import { ActionService } from './action.service';
+import { Tag } from '../entities/tag.entity';
 import { UserService } from './user.service';
+import { TagService } from './tag.service';
 import { PAGE_SIZE } from '../constants/post-constant';
+import { extractIMG } from '../utils';
+import Fuse from 'fuse.js'
 
 const userService = new UserService();
+const tagService = new TagService();
 
 export class PostService {
   private postRepository = AppDataSource.getRepository(Post);
@@ -17,7 +21,7 @@ export class PostService {
   async getPostById(userId: number | undefined, postId: number) {
     const post = await this.postRepository.findOne({
       where: { postId },
-      relations: ['user', 'stats', 'actions', 'comments']
+      relations: ['user', 'stats', 'actions', 'comments', 'tags']
     });
 
     if (!post) {
@@ -75,7 +79,58 @@ export class PostService {
   async getPostsByVisibility(visibility: PostVisibility) {
     return await this.postRepository.find({
       where: { visible: visibility },
+      relations: ['user', 'tags'],
     });
+  }
+
+  async getPostsByTag(tagId: number) {
+    return await this.postRepository.find({
+      where: {
+        visible: PostVisibility.PUBLIC,
+        tags: { id: tagId }
+      },
+      relations: ['user', 'tags'],
+    });
+  }
+
+  async getPostsByPattern(pattern: string, currentUserId: number | undefined) {
+    const posts = await this.postRepository.find({
+      relations: ['user'],
+      where: [
+        { visible: PostVisibility.PUBLIC },
+        { user: { userId: currentUserId } }
+      ]
+    });
+    const fuse = new Fuse(posts, {
+      keys: [
+        'title',
+        'content',
+        'user.username',
+        'tags.name'
+      ],
+      useExtendedSearch: true, //unix-like search: ' ' = AND, '|'=OR
+      threshold: 0, //threshold of 0 requires a perfect match
+      ignoreLocation: true,
+    });
+    const result = fuse.search(pattern);
+    return result.map((item) => item.item);
+  }
+
+  async getTopPosts(limit: number, userId?: number) {
+    const topPosts = await this.postRepository
+      .createQueryBuilder('post')
+      .innerJoinAndSelect('post.stats', 'stats')
+      .innerJoinAndSelect('post.user', 'user')
+      .where('post.visible = :visibility OR user.userId = :userId', {
+        visibility: PostVisibility.PUBLIC,
+        userId,
+      })
+      .addSelect('(stats.views * 2 + stats.likes * 3 + stats.comments * 4) as score') // Calculate score
+      .orderBy('score', 'DESC')
+      .limit(limit)
+      .getMany();
+
+    return topPosts;
   }
 
   async getFYPPosts(userId: number, page: number = 1) {
@@ -95,16 +150,20 @@ export class PostService {
       take: pageSize, 
     });
     return posts;
-  }   
+  }
 
   async create(createPostDto: CreatePostDto, userId: number): Promise<Post> {
     const user = await userService.getUserById(userId);
     if (!user) {
       throw new Error('User not found');
     }
-        
-    const post = this.postRepository.create({
+    if (createPostDto.tags) {
+      const postTags = await tagService.associateTagsWithPost(createPostDto.tags);
+      createPostDto.tags = postTags;
+    }
+    const post = await this.postRepository.create({
       ...createPostDto,
+      imageUrl: extractIMG(createPostDto.content),
       user,
     });
     // Create PostStats along with new post
@@ -129,8 +188,11 @@ export class PostService {
     if (post.user.userId !== userId) {
       throw new Error('Unauthorized');
     }
-  
     this.postRepository.merge(post, updatePostDto);
+    post.imageUrl = extractIMG(updatePostDto.content);
+    if (updatePostDto.tags) {
+      post.tags = await tagService.associateTagsWithPost(updatePostDto.tags);
+    }
     return this.postRepository.save(post);
   }
 

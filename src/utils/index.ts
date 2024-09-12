@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { UserRole } from '../constants/user-roles';
 import { UserStatus } from '../constants/user-status';
+import { Tag } from '../entities/tag.entity';
 import { BLOCK_LIST_ITEM_TAGS,
         MAX_PREVIEW_LENGTH } from '../constants/';
 import DOMPurify from "isomorphic-dompurify";
@@ -47,4 +48,25 @@ export function reformatTimestamp(timestampStr: Date) {
 
   // Return the formatted string
   return `${day}-${month}-${year} ${hours}:${minutes}`;
+}
+
+export function mapTagsToTagEntities(tags: string[]): Tag[] {
+  return tags.map(name => {
+    const tag = new Tag();
+    tag.name = name;
+    return tag;
+  });
+}
+
+export function mapTagEntitiesToTags(tags: Tag[]): string[] {
+  return tags.map(tag => tag.name);
+}
+
+export function extractIMG(content: string) {
+  const regex = /<img\s+[^>]*src="([^"]+)"/;
+  const match = content.match(regex);
+  if (match) {
+    return match[1];
+  }
+  return '';
 }

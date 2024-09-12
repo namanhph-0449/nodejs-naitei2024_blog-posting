@@ -13,6 +13,7 @@ import { validateSessionRole,
         validateActiveUser,
         sanitizeContent } from '../utils/';
 import { PostService } from '../services/post.service';
+import { PostVisibility } from '../constants/post-visibility';
 
 const userService = new UserService();
 const postService = new PostService();
@@ -64,6 +65,7 @@ export const getUserById = asyncHandler(async (req: Request, res: Response) => {
   // Admin and page owner can Edit profile.
   res.render('users/show', {
     title: 'title.userProfile',
+    postVisibility: PostVisibility,
     user: userDto,
     userActive: validateActiveUser(userDto.status),
     userAdmin: userDto?.role === UserRole.ADMIN,
