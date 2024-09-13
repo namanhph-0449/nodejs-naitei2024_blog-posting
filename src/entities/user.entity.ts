@@ -4,6 +4,7 @@ import { UserStatus } from '../constants/user-status';
 import { Action } from './action.entity';
 import { Comment } from './comment.entity';
 import { Post } from './post.entity';
+import { Expose } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -16,6 +17,7 @@ export class User {
   @PrimaryGeneratedColumn()
   userId: number;
 
+  @Expose()
   @Column({ unique: true })
   username: string;
 
